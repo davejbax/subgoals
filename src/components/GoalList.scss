@@ -1,0 +1,42 @@
+@import '../_globals.scss';
+
+.goal-list {
+	@media screen and (max-width: $breakSmall) {
+		flex-direction: column;
+	}
+
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+}
+
+.goal-list .goal-list__item {
+	@media screen and (max-width: $breakSmall) {
+		width: 100%;
+		margin-right: 0;
+		margin-bottom: $padding;
+	}
+
+	width: 30%;
+	height: 160px;
+	border-radius: 6px;
+	margin-right: $padding;
+
+	box-sizing: border-box;
+	padding: $paddingSmall;
+
+	cursor: default;
+
+	&:hover {
+		box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+	}
+}
+
+.goal-list .goal-list__item h3 {
+	margin: 0;
+	margin-bottom: $paddingSmall;
+	padding: 0;
+	font-size: 1.4em;
+	font-weight: normal;
+}

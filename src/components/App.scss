@@ -1,0 +1,123 @@
+@import '../_globals.scss';
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: $fgColor;
+
+  background-color: $bgColor;  
+}
+
+.float-right {
+	float: right;
+}
+
+.page-width {
+	max-width: $pageWidth;
+	margin: 0 auto;
+}
+
+.page-margins {
+	padding: 0 $padding;
+}
+
+@each $name, $color in $bgColors {
+	.bg-#{$name} {
+		background-color: #{$color};
+	}
+}
+
+#body {
+	position: relative;
+}
+
+/*
+	Buttons
+*/
+.button-complete {
+	$size: 40px;
+
+	// Remove link-formatting etc.
+	text-decoration: none;
+	text-align: center;
+	text-indent: 0;
+	color: white;
+
+	// Grey (until hovered over)
+	background: map-get($bgColors, grey);
+
+	// Circular icon
+	display: block;
+	width: $size;
+	height: $size;
+	line-height: $size;
+	border-radius: 50%;
+
+	// Center on op-left corner
+	position: absolute;
+	top: -$size / 2;
+	left: -$size / 2;	
+
+	// Fade in on item hover
+	opacity: 0;
+	transition: opacity 0.4s ease-in-out;
+
+	// Display over item
+	// TODO: standardize z-indexes
+	z-index: 200;
+
+	// Expanding background
+	&:before {
+		transform: scale(0.01);
+
+		content: '';
+		position: absolute;
+		background: map-get($bgColors, green);
+
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+
+		border-radius: 50%;
+
+		z-index: -1;
+		transition: transform 0.2s ease-in-out;
+	}
+
+	&:hover:before {
+		transform: scale(1);
+	}
+
+}
+
+*:hover > .button-complete {
+	opacity: 1;
+}
+
+.button-overflow {
+	float: right;
+	color: map-get($bgColors, darkGrey);
+
+	text-indent: 0;
+	width: 0.6em;
+}
+
+.button-add {
+	float: right;
+	color: map-get($bgColors, darkGrey);
+}
+
+/* Miscellaneous */
+*[contentEditable="true"]:empty:before {
+	content: attr(placeholder);
+	display: block;
+	cursor: text;
+	color: map-get($bgColors, grey);
+}

@@ -1,0 +1,64 @@
+@import '../_globals.scss';
+
+$maxDepth: 10;
+@mixin nested-list($depth) {
+	.subgoal-list-item-text {
+		padding-left: 1em + 2em * $depth;
+	}
+	@if $depth < $maxDepth {
+		.subgoal-list.depth-#{$depth + 1} {
+			@include nested-list($depth + 1);
+		}
+	}
+}
+
+// Make the list a little down from the nav bar
+#body > .subgoal-list {
+	margin: $padding 0;
+}
+
+.subgoal-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	position: relative;
+
+	@include nested-list(0);
+}
+
+.subgoal-list .subgoal-list-item {
+	position: relative;
+	display: flex;
+	// padding: $paddingSmall;
+	min-height: 3em;
+	line-height: 3em;
+
+	background: white;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.subgoal-list .subgoal-list-item-text {
+	flex: 1;
+
+	border: none;
+	outline: none;
+	font-size: 1em;
+
+	$lineHeight: 1.5em;
+	padding: ((3 - $lineHeight) / 2) 1em;
+	padding-right: 0;
+	line-height: $lineHeight;
+
+	&:disabled {
+		background: none;
+		color: inherit;
+	}
+}
+
+.subgoal-list .button-overflow,
+.subgoal-list .button-add {
+	text-indent: 0;
+	line-height: 3em;
+	width: 3em;
+	text-align: center;
+}

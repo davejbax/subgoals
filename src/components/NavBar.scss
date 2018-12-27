@@ -1,0 +1,29 @@
+@import '../_globals.scss';
+
+.nav-bar {
+	display: block;
+	height: $navBarHeight;
+	color: white;
+	transition: background 0.3s ease-in;
+}
+
+.nav-bar > div {
+	display: flex;
+	flex-direction: row;
+	line-height: $navBarHeight;
+}
+
+.nav-bar h1 {
+	margin: 0;
+	padding: 0;
+
+	flex: 1;
+}
+
+.nav-bar .back-button {
+	text-decoration: none;
+	color: white;
+	font-size: 1.5em;
+
+	margin-right: 12px;
+}
