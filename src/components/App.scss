@@ -40,6 +40,18 @@ body {
 /*
 	Buttons
 */
+button {
+	all: unset;
+
+	// Button reset
+	background: none;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	padding: 0;
+	font-size: 1em;
+}
+
 .button-complete {
 	$size: 40px;
 

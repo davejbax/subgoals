@@ -33,29 +33,29 @@ const Subgoal = ({ subgoal, depth }) => {
 		<>
 			<div
 				className="subgoal-list-item">
-				<a
+				<button
 					href="#"
 					className="button-complete">
 					<i className="fas fa-check"></i>
-				</a>
+				</button>
 
 				<div
 					className="subgoal-list-item-text">
 					{subgoal.name}
 				</div>
 
-				<a
+				<button
 					href="#"
 					className="button-overflow">
 					<i className="fas fa-ellipsis-v"></i>
-				</a>
+				</button>
 			</div>
 			{subsubgoals}
 		</>
 	);
 }
 
-const AddSubgoal = ({}) =>
+const AddSubgoal = () =>
 	<div className="subgoal-list-item subgoal-list-add">
 		<div
 			className="subgoal-list-item-text"

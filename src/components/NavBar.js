@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './NavBar.scss';
 
  const NavBar = ({ title, color, hasBack, onGoBack }) =>
@@ -6,9 +6,9 @@ import './NavBar.scss';
 		<div className="page-width page-margins">
 			{hasBack ?
 				(
-					<a href="#" className="back-button" onClick={onGoBack}>
+					<button href="#" className="back-button" onClick={onGoBack}>
 						<i className="fas fa-arrow-left"></i>
-					</a>
+					</button>
 				)
 				: ''}
 			<h1>{title}</h1>

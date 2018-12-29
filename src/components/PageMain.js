@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 
-import { setSelectedGoal } from '../actions/page.js';
 import InteractiveGoalList from '../containers/InteractiveGoalList.js';
 
 const PageMain = ({ goals, setSelectedGoal }) =>
