@@ -1,19 +1,25 @@
-import { SET_SELECTED_GOAL, GO_BACK } from '../constants/actionTypes.js';
+import {
+	SET_SELECTED_GOAL,
+	GO_BACK,
+	CHANGE_NEW_SUBGOAL_DEPTH
+} from '../constants/actionTypes.js';
 
-function setSelectedGoal(goal) {
-	return {
+export const setSelectedGoal = (goal) => (
+	{
 		type: SET_SELECTED_GOAL,
 		goal: goal
-	};
-}
+	}
+);
 
-function goBack() {
-	return {
+export const goBack = () => (
+	{
 		type: GO_BACK
-	};
-}
+	}
+);
 
-export {
-	setSelectedGoal,
-	goBack
-}
+export const changeNewSubgoalDepth = (delta) => (
+	{
+		type: CHANGE_NEW_SUBGOAL_DEPTH,
+		delta: delta
+	}
+);

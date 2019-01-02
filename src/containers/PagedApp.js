@@ -1,12 +1,13 @@
 import { connect } from 'react-redux';
 
+import { findGoalById } from '../logic/goalSelectors.js';
 import { goBack } from '../actions/page.js';
 import App from '../components/App.js';
 
 const mapStateToProps = state => ({
-  selectedGoal: state.page.selectedGoal,
+  selectedGoal: findGoalById(state.goals.goals, state.page.selectedGoalId),
   title: state.page.title,
-  hasBack: state.page.selectedGoal != null
+  hasBack: state.page.selectedGoalId != null
 });
 
 const mapDispatchToProps = dispatch => ({

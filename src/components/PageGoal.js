@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import SubgoalList from './SubgoalList.js';
+import EditableSubgoalList from '../containers/EditableSubgoalList.js';
 
 class PageGoal extends Component {
 	render() {
 		const goal = this.props.goal;
 
 		return (
-			<SubgoalList subgoals={goal.subgoals} />
+			<EditableSubgoalList goal={goal} />
 		);
 	}
 }

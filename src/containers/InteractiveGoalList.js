@@ -4,7 +4,7 @@ import { setSelectedGoal } from '../actions/page.js';
 import GoalList from '../components/GoalList.js';
 
 const mapStateToProps = state => ({
-  goals: state.goals
+  goals: state.goals.goals
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -1,14 +1,21 @@
 @import '../_globals.scss';
 
 $maxDepth: 10;
-@mixin nested-list($depth) {
-	.subgoal-list-item-text {
+// @mixin nested-list($depth) {
+// 	.subgoal-list-item-text {
+// 		padding-left: 1em + 2em * $depth;
+// 	}
+// 	@if $depth < $maxDepth {
+// 		.depth-#{$depth + 1} {
+// 			@include nested-list($depth + 1);
+// 		}
+// 	}
+// }
+
+@for $depth from 0 through $maxDepth {
+	.depth-#{$depth} .subgoal-list-item .subgoal-list-item-text,
+	.depth-#{$depth}.subgoal-list-add .subgoal-list-item-text {
 		padding-left: 1em + 2em * $depth;
-	}
-	@if $depth < $maxDepth {
-		.subgoal-list.depth-#{$depth + 1} {
-			@include nested-list($depth + 1);
-		}
 	}
 }
 
@@ -23,7 +30,7 @@ $maxDepth: 10;
 	padding: 0;
 	position: relative;
 
-	@include nested-list(0);
+	// @include nested-list(0);
 }
 
 .subgoal-list .subgoal-list-item {
