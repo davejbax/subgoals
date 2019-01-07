@@ -1,115 +1,113 @@
 import React, { Component } from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { getGoalIndex, getFlattenedGoals } from '../logic/goalSelectors.js';
+import Tree from '@atlaskit/tree';
+
+import { getFlattenedGoals } from '../logic/goalSelectors.js';
 import './SubgoalList.scss';
 
 class SubgoalList extends Component {
-	render() {
-		// Determine whether we are the root subgoal list
-		// Note: being the root list requires an additional property, onDragEnd
-		const isRootList = !this.props.depth;
+	constructor(props) {
+		super(props);
+		this.getTreeData = this.getTreeData.bind(this);
+	}
 
-		// Create a function to retrieve the index of a particular goal in our list
-		// Note that this is relative to the root subgoal list, so for depth > 0,
-		// we use a property passed down to recursively implemented subgoal lists.
-		const flattenedGoals = getFlattenedGoals(this.props.goal.subgoals)
-			.map((goal) => goal.id);
-		const getIndex = isRootList ?
-			((id) => flattenedGoals.indexOf(id)) :
-			this.props.getIndex;
+	convertGoalToTreeItem(goal) {
+		return {
+			id: goal.id,
+			children: goal.subgoals.map((sg) => sg.id),
+			hasChildren: goal.subgoals.length > 0,
+			isExpanded: true,
+			isChildrenLoading: false,
+			data: { goal: goal }
+		};
+	}
 
-		// Map each subgoal to an element; elements are wrapped in a Draggable container,
-		// which allows them to be rearranged in the list.
-		const subgoals = this.props.goal.subgoals.map(subgoal =>
-			<Draggable
-				key={subgoal.id}
-				draggableId={subgoal.id}
-				index={getIndex(subgoal.id)}>
-				{(provided, snapshot) =>
-					<Subgoal
-						subgoal={subgoal}
-						depth={this.props.depth || 0}
-						provided={provided}
-						snapshot={snapshot}
-						getIndex={getIndex} />
-				}
-			</Draggable>
-		);
+	getTreeData() {
+		// Form list of tree items from list of goals
+		const items = getFlattenedGoals(this.props.goal.subgoals)
+			.map(this.convertGoalToTreeItem);
 
-		// If we are the root, display a new subgoal field that allows users to create
-		// new subgoals and add them to the list
-		const newSubgoal = isRootList ?
-			<AddSubgoal
-				onAddKeyPress={(e) => this.props.onAddKeyPress(e, this.props.goal.id)}
-				depth={this.props.newSubgoalDepth} /> :
-			null;
+		// Add the root node, i.e. the goal this subgoal list is tied to
+		items.push(this.convertGoalToTreeItem(this.props.goal));
 
-		if (!isRootList) {
-			// If we are not the root list, do NOT wrap subgoal list in a DragDropContext
-			return (
-				<div
-					className={`subgoal-list depth-${this.props.depth}`}>
-					{subgoals}
-					{newSubgoal}
-				</div>
-			);
-		} else {
-			// If we are the root list, wrap subgoal list in DragDropContext
-			return (
-				<DragDropContext onDragEnd={(result) => this.props.onDragEnd(this.props.goal.id, result)}>
-					<Droppable droppableId="subgoalList">
-						{(provided, snapshot) =>
-							<div
-								className={`subgoal-list depth-${this.props.depth}`}
-								ref={provided.innerRef}>
-								{subgoals}
-								{newSubgoal}
-							</div>
-						}
-					</Droppable>
-				</DragDropContext>
-			);
+		// Return a TreeData type for the @atlaskit/tree package
+		return {
+			rootId: this.props.goal.id,
+			items: items.reduce((acc, cur) => {
+				acc[cur.id] = cur;
+				return acc;
+			}, {})
 		}
+	}
+
+	renderItem({ item, depth, onExpand, onCollapse, provided }) {
+		return (
+			<Subgoal
+				provided={provided}
+				depth={depth}
+				subgoal={item.data.goal}
+			/>
+		);
+	}
+
+	onExpand(itemId) {
+		// TODO
+		console.log('on expand');
+	}
+
+	onCollapse(itemId) {
+		// TODO
+		console.log('on collapse');
+	}
+
+	render() {
+		const tree = this.getTreeData();
+
+		return (
+			<div className="subgoal-list">
+				<Tree
+					tree={tree}
+					renderItem={this.renderItem}
+					onExpand={this.onExpand}
+					onCollapse={this.onCollapse}
+					onDragEnd={this.props.onDragEnd}
+					offsetPerLevel={0}
+					isDragEnabled
+					isNestingEnabled
+				/>
+				<AddSubgoal
+					onAddKeyPress={(e) => this.props.onAddKeyPress(e, this.props.goal.id)}
+					depth={this.props.newSubgoalDepth} />
+			</div>
+		);
 	}
 }
 
 const Subgoal = ({ subgoal, depth, provided, snapshot, getIndex }) => {
-	let subsubgoals = subgoal.subgoals.length > 0 ? 
-		<SubgoalList
-			goal={subgoal}
-			depth={depth + 1}
-			getIndex={getIndex} />
-		: null;
-
 	return (
-		<>
+		<div
+			className={`subgoal-list-item depth-${depth}`}
+			ref={provided.innerRef}
+			{...provided.draggableProps}
+			{...provided.dragHandleProps}
+			style={provided.draggableProps.style}>
+
+			<button
+				href="#"
+				className="button-complete">
+				<i className="fas fa-check"></i>
+			</button>
+
 			<div
-				className="subgoal-list-item"
-				ref={provided.innerRef}
-				{...provided.draggableProps}
-				{...provided.dragHandleProps}
-				style={provided.draggableProps.style}>
-
-				<button
-					href="#"
-					className="button-complete">
-					<i className="fas fa-check"></i>
-				</button>
-
-				<div
-					className="subgoal-list-item-text">
-					{subgoal.name}
-				</div>
-
-				<button
-					href="#"
-					className="button-overflow">
-					<i className="fas fa-ellipsis-v"></i>
-				</button>
-
+				className="subgoal-list-item-text">
+				{subgoal.name}
 			</div>
-			{subsubgoals}
-		</>
+
+			<button
+				href="#"
+				className="button-overflow">
+				<i className="fas fa-ellipsis-v"></i>
+			</button>
+		</div>
 	);
 }
 

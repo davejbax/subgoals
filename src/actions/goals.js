@@ -8,12 +8,11 @@ export function addSubgoal(name, goalId) {
 	};
 }
 
-export function moveSubgoal(rootId, srcIndex, dstIndex) {
+export function moveSubgoal(src, dst) {
 	return {
 		type: MOVE_SUBGOAL,
-		rootId: rootId,
-		srcIndex: srcIndex,
-		dstIndex: dstIndex
+		src: src,
+		dst: dst
 	};
 }
 

@@ -86,8 +86,33 @@ function applyAddSubgoal(state, action) {
 }
 
 function applyMoveSubgoal(state, action) {
-	// TODO
-	return state;
+	if (!action.dst)
+		return state;
+
+	// Clone state so we don't mutate it or reuse refs
+	const newState = cloneDeep(state);
+
+	// Find the parents in question (we're moving an item from one parent to another)
+	const srcParent = breadthFirstSearch(
+		{ subgoals: newState.goals },
+		(goal) => action.src.parentId === goal.id,
+		(goal) => goal.subgoals
+	);
+	const dstParent = breadthFirstSearch(
+		{ subgoals: newState.goals },
+		(goal) => action.dst.parentId === goal.id,
+		(goal) => goal.subgoals
+	);
+
+	// Get the destination index: if it's NaN, that means we're at the last index
+	const dstIndex = isNaN(action.dst.index) ? dstParent.subgoals.length : action.dst.index;
+
+	// Find the goal we're moving, remove it from the source parent, and insert it into the
+	// destination parent at the desired position
+	const goal = srcParent.subgoals.splice(action.src.index, 1)[0];
+	dstParent.subgoals.splice(dstIndex, 0, goal);
+
+	return newState;
 }
 
 function goalsReducer(state = INITIAL_STATE, action) {

@@ -16,8 +16,8 @@ function onAddKeyPress(dispatch, e, goalId) {
 	}
 }
 
-function onDragEnd(dispatch, rootId, result) {
-	dispatch(moveSubgoal(rootId, result.source.index, result.destination.index));
+function onDragEnd(dispatch, src, dst) {
+	dispatch(moveSubgoal(src, dst));
 }
 
 const mapStateToProps = state => ({
@@ -26,7 +26,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	onAddKeyPress: (e, goalId) => onAddKeyPress(dispatch, e, goalId),
-	onDragEnd: (rootId, result) => onDragEnd(dispatch, rootId, result)
+	onDragEnd: (src, dst) => onDragEnd(dispatch, src, dst)
 });
 
 export default connect(
