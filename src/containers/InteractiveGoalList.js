@@ -8,7 +8,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onGoalClick: (goal) => dispatch(setSelectedGoal(goal))
+  onGoalClick: (goal) => dispatch(setSelectedGoal(goal.id))
 });
 
 export default connect(

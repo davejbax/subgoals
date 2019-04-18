@@ -11,8 +11,8 @@ import PagedApp from './containers/PagedApp';
 import store from './store';
 
 ReactDOM.render(
-	<Provider store={store}>
-		<PagedApp />
-	</Provider>,
-	document.getElementById('root')
+  <Provider store={store}>
+    <PagedApp />
+  </Provider>,
+  document.getElementById('root')
 );
