@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Tree from '@atlaskit/tree';
 
-import { flattenGoals } from '../logic/goalSelectors.js';
+import { flattenGoals } from '../../logic/goalSelectors.js';
 import './SubgoalList.scss';
-import OverflowMenu from './OverflowMenu.js';
+import OverflowMenu from '../common/OverflowMenu.js';
 
 class SubgoalList extends Component {
   constructor(props) {

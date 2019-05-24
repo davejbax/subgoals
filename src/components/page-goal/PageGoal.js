@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import EditableSubgoalList from '../containers/EditableSubgoalList.js';
+import EditableSubgoalList from '../../containers/EditableSubgoalList.js';
 
 class PageGoal extends Component {
   render() {

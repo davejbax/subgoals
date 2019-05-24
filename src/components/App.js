@@ -1,9 +1,9 @@
 import React from 'react';
 
 // Pages
-import PageMain from './PageMain.js';
-import PageGoal from './PageGoal.js';
-import NavBar from './NavBar.js';
+import PageMain from './page-main/PageMain.js';
+import PageGoal from './page-goal/PageGoal.js';
+import NavBar from './common/NavBar.js';
 
 // CSS
 import './App.scss';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import InteractiveGoalList from '../containers/InteractiveGoalList.js';
+import InteractiveGoalList from '../../containers/InteractiveGoalList.js';
 
 const PageMain = ({ goals, setSelectedGoal }) =>
   <div>

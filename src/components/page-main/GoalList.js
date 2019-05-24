@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { calculateGoalProgress } from '../logic/goalProcessing.js';
+import { calculateGoalProgress } from '../../logic/goalProcessing.js';
 import './GoalList.scss';
 
 class GoalList extends Component {

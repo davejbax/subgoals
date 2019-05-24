@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { addSubgoal, moveSubgoal } from '../actions/goals.js';
 
-import SubgoalList from '../components/SubgoalList.js';
+import SubgoalList from '../components/page-goal/SubgoalList.js';
 
 function onAddKeyPress(dispatch, e, goalId) {
   if (e.key === 'Enter' && !e.shiftKey) {    
