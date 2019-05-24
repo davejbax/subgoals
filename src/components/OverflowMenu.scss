@@ -1,0 +1,54 @@
+@import '../_globals.scss';
+
+@keyframes fadeIn {
+	0% { opacity: 0; }
+	100% { opacity: 1; }
+}
+
+.overflow-menu {
+	position: fixed;
+	opacity: 0;
+	pointer-events: none;
+
+	animation: fadeIn 0.15s ease-in;
+
+	&.visible {
+		opacity: 1;
+		pointer-events: all;
+	}
+	
+	&:focus {
+		outline: none;
+	}
+}
+
+.overflow-menu ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+
+	box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
+	overflow: hidden;
+}
+
+.overflow-menu ul li {
+	display: block;
+	width: 100%;
+}
+
+.overflow-menu ul li button {
+	display: block;
+	padding: $paddingSmall;
+	width: 100%;
+	box-sizing: border-box;
+
+	background: white;
+
+	&:hover {
+		background: map-get($bgColors, lightGrey);
+	}
+
+	&:active {
+		background: map-get($bgColors, grey);
+	}
+}

@@ -57,7 +57,7 @@ const INITIAL_STATE = {
 
 function applyAddSubgoal(state, action) {
   const newState = cloneDeep(state);
-  const subgoal = findGoalById(action.goalId);
+  const subgoal = findGoalById(newState.goals, action.goalId);
 
   if (subgoal != null) {
     subgoal.subgoals.push({

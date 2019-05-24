@@ -3,11 +3,28 @@ import Tree from '@atlaskit/tree';
 
 import { flattenGoals } from '../logic/goalSelectors.js';
 import './SubgoalList.scss';
+import OverflowMenu from './OverflowMenu.js';
 
 class SubgoalList extends Component {
   constructor(props) {
     super(props);
+
     this.getTreeData = this.getTreeData.bind(this);
+    this.renderItem = this.renderItem.bind(this);
+    this.openMenu = this.openMenu.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
+    this.handleExpand = this.handleExpand.bind(this);
+    this.handleCollapse = this.handleCollapse.bind(this);
+    this.convertGoalToTreeItem = this.convertGoalToTreeItem.bind(this);
+
+    this.state = {
+      menu: {
+        open: false,
+        anchorRef: null,
+        items: []
+      },
+      collapsedGoals: {}
+    };
   }
 
   convertGoalToTreeItem(goal) {
@@ -15,7 +32,7 @@ class SubgoalList extends Component {
       id: goal.id,
       children: goal.subgoals.map((sg) => sg.id),
       hasChildren: goal.subgoals.length > 0,
-      isExpanded: true,
+      isExpanded: !(goal.id in this.state.collapsedGoals),
       isChildrenLoading: false,
       data: { goal: goal }
     };
@@ -39,24 +56,73 @@ class SubgoalList extends Component {
     }
   }
 
-  renderItem({ item, depth, onExpand, onCollapse, provided }) {
+  handleCollapse(itemId) {
+    this.setState(state => {
+      let newState = { ...state };
+
+      newState.collapsedGoals[itemId] = true;
+
+      return newState;
+    });
+  }
+
+  handleExpand(itemId) {
+    this.setState(state => {
+      let newState = { ...state };
+
+      if (itemId in newState.collapsedGoals) {
+        delete newState.collapsedGoals[itemId];
+      }
+
+      return newState;
+    });
+  }
+
+  openMenu(subgoal, anchorRef) {
+    this.setState(state => {
+      let newState = { ...state };
+
+      newState.menu = {
+        open: true,
+        anchorRef: anchorRef,
+        items: [
+          { text: 'Edit subgoal', onClick: () => { return true; } },
+          { text: 'Delete subgoal', onClick: () => {} }
+        ]
+      };
+
+      return newState;
+    });
+  }
+
+  closeMenu() {
+    this.setState(state => {
+      let newState = { ...state };
+
+      newState.menu = {
+        open: false,
+        anchorRef: null,
+        items: []
+      };
+
+      return newState;
+    });
+  }
+
+  renderItem({ item, depth, onExpand, onCollapse, provided, snapshot }) {
     return (
       <Subgoal
-        provided={provided}
+        item={item}
+
         depth={depth}
-        subgoal={item.data.goal}
+        provided={provided}
+        snapshot={snapshot}
+
+        onExpand={onExpand}
+        onCollapse={onCollapse}
+        openMenu={this.openMenu}
       />
     );
-  }
-
-  onExpand(itemId) {
-    // TODO
-    console.log('on expand');
-  }
-
-  onCollapse(itemId) {
-    // TODO
-    console.log('on collapse');
   }
 
   render() {
@@ -67,22 +133,54 @@ class SubgoalList extends Component {
         <Tree
           tree={tree}
           renderItem={this.renderItem}
-          onExpand={this.onExpand}
-          onCollapse={this.onCollapse}
+          onExpand={this.handleExpand}
+          onCollapse={this.handleCollapse}
           onDragEnd={this.props.onDragEnd}
           offsetPerLevel={0}
           isDragEnabled
           isNestingEnabled
         />
+
         <AddSubgoal
           onAddKeyPress={(e) => this.props.onAddKeyPress(e, this.props.goal.id)}
           depth={this.props.newSubgoalDepth} />
+
+        <OverflowMenu
+          visible={this.state.menu.open}
+          items={this.state.menu.items}
+          anchorRef={this.state.menu.anchorRef}
+          closeMenu={this.closeMenu}
+        ></OverflowMenu>
       </div>
     );
   }
 }
 
-const Subgoal = ({ subgoal, depth, provided, snapshot, getIndex }) => {
+/**
+ * A single subgoal list item in a list of subgoals
+ * @param {*} item The tree item corresponding to this subgoal
+ * @param {number} depth How deeply nested this subgoal is
+ * @param {TreeDraggableProvided} provided Provided properties that control dragging
+ * @param {DraggableStateSnapshot} snapshot State for dragging
+ * @param {*} onExpand Callback for expanding the item
+ * @param {*} onCollapse Callback for collapsing the item
+ */
+const Subgoal = (
+  {
+    item,
+    depth,
+    provided,
+    snapshot,
+    onExpand,
+    onCollapse,
+    openMenu
+  }
+) => {
+  const subgoal = item.data.goal;
+  const ref = React.createRef();
+
+  const toggleExpanded = () => item.isExpanded ? onCollapse(item.id) : onExpand(item.id);
+  
   return (
     <div
       className={`subgoal-list-item depth-${depth}`}
@@ -98,14 +196,26 @@ const Subgoal = ({ subgoal, depth, provided, snapshot, getIndex }) => {
       </button>
 
       <div
-        className="subgoal-list-item-text">
+        className="subgoal-list-item-text"
+        onClick={toggleExpanded}
+      >
         {subgoal.name}
       </div>
 
+      {item.hasChildren && 
+        <div className="toggle-expand">
+          <i className={'fas fa-chevron-' + (item.isExpanded ? 'up' : 'down')}></i>
+        </div>
+      }
+
       <button
         href="#"
-        className="button-overflow">
-        <i className="fas fa-ellipsis-v"></i>
+        className="button-overflow"
+        onClick={() => openMenu(subgoal, ref)}>
+        <i
+          ref={ref}
+          className="fas fa-ellipsis-v">
+        </i>
       </button>
     </div>
   );

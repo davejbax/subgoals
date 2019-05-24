@@ -12,8 +12,6 @@ function onAddKeyPress(dispatch, e, goalId) {
 }
 
 function onDragEnd(dispatch, src, dst) {
-  console.log(src);
-  console.log(dst);
   dispatch(moveSubgoal(src, dst));
 }
 
