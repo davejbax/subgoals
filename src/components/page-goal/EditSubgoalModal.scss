@@ -1,0 +1,13 @@
+@import '../../globals.scss';
+
+h3 {
+  margin: 0;
+  font-size: 1.3em;
+  line-height: 1.3em;
+}
+
+p.longer-desc {
+  margin: 0;
+  padding: 0;
+  margin-top: $paddingSmall;
+}

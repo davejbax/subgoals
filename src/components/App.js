@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactModal from 'react-modal';
 
 // Pages
 import PageMain from './page-main/PageMain.js';
@@ -9,7 +10,7 @@ import NavBar from './common/NavBar.js';
 import './App.scss';
 
 const App = ({ title, selectedGoal, hasBack, onGoBack }) =>   
-  <div>
+  <div id="main">
     <NavBar
       title={title}
       hasBack={hasBack}

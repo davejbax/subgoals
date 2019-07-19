@@ -72,4 +72,41 @@ $maxDepth: 10;
 
 .subgoal-list .toggle-expand {
 	color: map-get($bgColors, grey);
+	padding: 0 0.3em;
+	padding-left: 1em;
+}
+
+.subgoal-modal {
+	position: absolute;
+	top: 20%;
+	left: 50%;
+	width: 80vw;
+	max-width: 800px;
+
+	padding: $padding;
+	margin: 0 auto;
+
+	// Center
+	transform: translateX(-50%);
+
+	background: white;
+	box-shadow: 0 0.2em 0.3em rgba(0, 0, 0, 0.3);
+	border-radius: 0.4em;
+
+	&:focus {
+		outline: none;
+	}
+}
+
+@keyframes slide-up {
+	0% { transform: translateX(-50%) translateY(50%); }
+	100% { transform: translateX(-50%) translateY(0%); }
+}
+
+.ReactModal__Overlay--after-open .subgoal-modal {
+	animation: slide-up 0.2s ease-in-out;
+}
+
+.ReactModal__Overlay {
+	z-index: 201;
 }
