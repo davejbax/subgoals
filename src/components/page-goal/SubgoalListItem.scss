@@ -1,0 +1,53 @@
+@import '../../globals.scss';
+
+$maxDepth: 10;
+
+@for $depth from 0 through $maxDepth {
+	.depth-#{$depth}.subgoal-list-item .subgoal-list-item-text,
+	.depth-#{$depth}.subgoal-list-add .subgoal-list-item-text {
+		padding-left: 1em + 2em * $depth;
+	}
+}
+
+.subgoal-list-item {
+	position: relative;
+	display: flex;
+	// padding: $paddingSmall;
+	min-height: 3em;
+	line-height: 3em;
+
+	background: white;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.subgoal-list-item-text {
+	flex: 1;
+
+	border: none;
+	outline: none;
+	font-size: 1em;
+
+	$lineHeight: 1.5em;
+	padding: ((3 - $lineHeight) / 2) 1em;
+	padding-right: 0;
+	line-height: $lineHeight;
+
+	&:disabled {
+		background: none;
+		color: inherit;
+	}
+}
+
+.subgoal-list-item .button-overflow,
+.subgoal-list-item .button-add {
+	text-indent: 0;
+	line-height: 3em;
+	width: 3em;
+	text-align: center;
+}
+
+.subgoal-list-item .toggle-expand {
+	color: map-get($bgColors, grey);
+	padding: 0 0.3em;
+	padding-left: 1em;
+}

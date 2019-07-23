@@ -45,7 +45,7 @@ class OverflowMenu extends React.Component {
       // blurring as a result of clicking a button), then close
       // the menu
       if (!insideMenu) {
-        this.props.closeMenu();
+        this.props.onCloseMenu();
       }
     }
   }
@@ -72,7 +72,7 @@ class OverflowMenu extends React.Component {
     const createClickHandler = (onClick) => {
       return () => {
         if (onClick()) {
-          this.props.closeMenu();
+          this.props.onCloseMenu();
         }
       }
     };
