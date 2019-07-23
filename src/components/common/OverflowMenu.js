@@ -35,7 +35,7 @@ class OverflowMenu extends React.Component {
       // menu element, or until we've reached the top of the tree
       while (elem && elem.parentNode) {
         elem = elem.parentNode;
-        if (elem == this.menuRef) {
+        if (elem === this.menuRef) {
           insideMenu = true;
           break;
         }
@@ -91,7 +91,7 @@ class OverflowMenu extends React.Component {
       >
         <ul>
           {this.props.items.map((item) =>
-          <li>
+          <li key={item.text}>
             <button onClick={createClickHandler(item.onClick)}>
               {item.text}
             </button>

@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 
 import './EditSubgoalModal.scss';
 
-class EditSubgoalModal extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
+class EditSubgoalModal extends Component {
 
   render() {
     const subgoal = this.props.subgoal;

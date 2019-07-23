@@ -9,6 +9,7 @@ class GoalList extends Component {
     const goalList = this.props.goals.map((goal) =>
       <GoalListItem
         goal={goal}
+        key={goal.id}
         onGoalClick={onGoalClick} />
     );
 

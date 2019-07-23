@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactModal from 'react-modal';
 
 // Pages
 import PageMain from './page-main/PageMain.js';
