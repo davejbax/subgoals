@@ -3,6 +3,7 @@ import React from 'react';
 import './SubgoalListItem.scss';
 
 const SubgoalListItem = ({
+  isComplete,
   isExpandable,
   isExpanded,
   onToggleExpanded,
@@ -16,7 +17,7 @@ const SubgoalListItem = ({
 
   return (
     <div
-      className={`subgoal-list-item depth-${depth}`}
+      className={`subgoal-list-item depth-${depth} ${isComplete ? 'complete' : ''}`}
     >
 
       {/* Complete/check button */}

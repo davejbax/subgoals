@@ -51,3 +51,15 @@ $maxDepth: 10;
 	padding: 0 0.3em;
 	padding-left: 1em;
 }
+
+.subgoal-list-item.complete .subgoal-list-item-text {
+	font-style: italic;
+	text-decoration: line-through;
+}
+
+.subgoal-list-item.complete .button-complete {
+	opacity: 1;
+	&:before {
+		transform: scale(1);
+	}
+}

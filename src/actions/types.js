@@ -5,3 +5,4 @@ export const GO_BACK = 'GO_BACK';
 // Goal actions
 export const ADD_SUBGOAL = 'ADD_SUBGOAL';
 export const MOVE_SUBGOAL = 'MOVE_SUBGOAL';
+export const SET_SUBGOAL_TITLE = 'SET_SUBGOAL_TITLE';

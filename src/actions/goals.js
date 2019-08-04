@@ -1,4 +1,4 @@
-import { ADD_SUBGOAL, MOVE_SUBGOAL } from './types.js';
+import { ADD_SUBGOAL, MOVE_SUBGOAL, SET_SUBGOAL_TITLE } from './types.js';
 
 /**
  * Creates a new subgoal and adds it to a (selected) goal. This will be
@@ -29,3 +29,10 @@ export function moveSubgoal(src, dst) {
   };
 }
 
+export function setSubgoalTitle(subgoal, title) {
+  return {
+    type: SET_SUBGOAL_TITLE,
+    subgoal: subgoal,
+    title: title
+  }
+}

@@ -1,13 +1,102 @@
 @import '../../globals.scss';
 
+header {
+  display: flex;
+  align-items: flex-start;
+}
+
 h3 {
+  flex: 1;
   margin: 0;
   font-size: 1.3em;
   line-height: 1.3em;
+
+  margin-top: $padding * 0.85;
+  margin-left: $padding * 0.85;
+  margin-bottom: $padding * 0.85;
+  padding: $padding * 0.15;
 }
 
-p.longer-desc {
+.button-close {
+  flex: 0;
+
+  padding: $padding;
+}
+
+.columns {
+  display: flex;
+
+  padding: 0 $padding;
+  padding-bottom: $padding;
+}
+
+.columns .column-main,
+.columns .column-aside {
+  flex-basis: 100%;
+}
+
+.columns .column-main {
+  flex: 13;
+}
+
+.columns .column-aside {
+  flex: 6;
+}
+
+@media screen and (max-width: $breakSmall) {
+  .columns,
+  .columns .column-main,
+  .columns .column-aside {
+    display: block;
+  }
+
+  .columns .column-aside {
+    margin-top: $paddingSmall;
+  }
+}
+
+.button-side {
+  display: block;
+  padding: $paddingSmall;
+  margin-bottom: $paddingSmall / 2;
+  
+  border: 1px solid #CCC;
+  border-radius: 4px;
+
+  text-decoration: none;
+  color: black;
+  font-size: 1em;
+  
+  width: 100%;
+  box-sizing: border-box;
+
+  &:hover {
+    background: #EEE;
+  }
+}
+
+h4 {
   margin: 0;
+  margin-bottom: $paddingSmall;
+}
+
+p {
   padding: 0;
-  margin-top: $paddingSmall;
+  margin: 0;
+  margin-bottom: $paddingSmall;
+
+  color: #666;
+}
+
+.editable {
+  border-radius: 5px;
+
+  &:hover {
+    background: #DDD;
+  }
+
+  &:focus {
+    outline: none;
+    background: #CCC;
+  }
 }

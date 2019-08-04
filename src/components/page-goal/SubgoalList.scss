@@ -21,7 +21,6 @@
 	width: 80vw;
 	max-width: 800px;
 
-	padding: $padding;
 	margin: 0 auto;
 
 	// Center
@@ -34,6 +33,21 @@
 	&:focus {
 		outline: none;
 	}
+
+	@media screen and (max-width: $breakSmall) {
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		width: auto;
+		max-width: none;
+		transform: none;
+		margin: 0;
+		
+		box-shadow: none;
+		border-radius: 0;
+		border: none;
+	}
 }
 
 @keyframes slide-up {
@@ -41,8 +55,17 @@
 	100% { transform: translateX(-50%) translateY(0%); }
 }
 
+@keyframes slide-up-mobile {
+	0% { transform: translateY(20%); }
+	100% { transform: translateY(0%); }
+}
+
 .ReactModal__Overlay--after-open .subgoal-modal {
 	animation: slide-up 0.2s ease-in-out;
+
+	@media screen and (max-width: $breakSmall) {
+		animation: slide-up-mobile 0.2s ease-in-out;
+	}
 }
 
 .ReactModal__Overlay {

@@ -1,6 +1,6 @@
 import * as cloneDeep from 'lodash/cloneDeep';
 
-import { ADD_SUBGOAL, MOVE_SUBGOAL } from '../actions/types.js';
+import { ADD_SUBGOAL, MOVE_SUBGOAL, SET_SUBGOAL_TITLE } from '../actions/types.js';
 import { breadthFirstSearch } from '../logic/trees.js';
 import { findGoalById } from '../logic/goalSelectors.js';
 
@@ -104,10 +104,22 @@ function applyMoveSubgoal(state, action) {
   return newState;
 }
 
+function applySetSubgoalTitle(state, action) {
+  // Clone state
+  const newState = cloneDeep(state);
+
+  // Find subgoal and update its title
+  const subgoal = findGoalById(newState.goals, action.subgoal.id);
+  subgoal.name = action.title;
+
+  return newState;
+}
+
 function goalsReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case ADD_SUBGOAL: return applyAddSubgoal(state, action);
     case MOVE_SUBGOAL: return applyMoveSubgoal(state, action);
+    case SET_SUBGOAL_TITLE: return applySetSubgoalTitle(state, action);
     default: return state;
   }
 }

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import ReactModal from 'react-modal';
 import { flattenGoals } from '../../logic/goalSelectors.js';
 import OverflowMenu from '../common/OverflowMenu.js';
-import EditSubgoalModal from './EditSubgoalModal.js';
+import EditSubgoalModalContainer from '../../containers/EditSubgoalModalContainer.js';
 import SubgoalListItem from './SubgoalListItem.js';
 import './SubgoalList.scss';
 
@@ -96,7 +96,7 @@ class SubgoalList extends Component {
         open: true,
         anchorRef: anchorRef,
         items: [
-          { text: 'Edit subgoal', onClick: () => { return true; } },
+          { text: 'Edit subgoal', onClick: () => { this.openSubgoalDialog(subgoal); } },
           { text: 'Delete subgoal', onClick: () => {} }
         ]
       };
@@ -159,6 +159,7 @@ class SubgoalList extends Component {
         style={provided.draggableProps.style}
       >
         <SubgoalListItem
+          isComplete={subgoal.completed}
           isExpandable={item.hasChildren}
           isExpanded={item.isExpanded}
           onToggleExpanded={toggleExpanded}
@@ -208,8 +209,9 @@ class SubgoalList extends Component {
           className="subgoal-modal"
           closeTimeoutMS={200}
         >
-          <EditSubgoalModal
+          <EditSubgoalModalContainer
             subgoal={this.state.modal.subgoal}
+            onRequestClose={this.closeSubgoalDialog}
           />
         </ReactModal>
       </div>
