@@ -1,10 +1,13 @@
 import * as cloneDeep from 'lodash/cloneDeep';
 import { findGoalById } from '../logic/goalSelectors.js';
+import { breadthFirstSearch } from '../logic/trees.js';
 
 // Actions
 const ADD_SUBGOAL = 'subgoals/goals/ADD_SUBGOAL';
 const MOVE_SUBGOAL = 'subgoals/goals/MOVE_SUBGOAL';
 const SET_GOAL_NAME = 'subgoals/goals/SET_GOAL_NAME';
+const TOGGLE_GOAL_COMPLETE = 'subgoals/goals/TOGGLE_GOAL_COMPLETE';
+const DELETE_GOAL = 'subgoals/goals/DELETE_GOAL';
 
 // Reducer
 const INITIAL_STATE = {
@@ -106,6 +109,30 @@ function applyMoveSubgoal(state, action) {
   return newState;
 }
 
+function applyDeleteGoal(state, action) {
+  const newState = cloneDeep(state);
+
+  // Find the parent
+  const parent = breadthFirstSearch(
+    { subgoals: newState.goals },
+    goal => goal.subgoals.findIndex(sg => sg.id === action.goalId) !== -1,
+    goal => goal.subgoals
+  );
+
+  // If we couldn't find a parent, don't do anything
+  if (!parent) {
+    return state;
+  }
+
+  // Get index of goal in parent
+  const goalIndex = parent.subgoals.findIndex(sg => sg.id === action.goalId);
+
+  // Remove from parent
+  parent.subgoals.splice(goalIndex, 1);
+
+  return newState;
+}
+
 function mutateGoal(state, goalId, callback) {
   // Clone state and find goal object by given ID
   const newState = cloneDeep(state);
@@ -127,7 +154,14 @@ export default function reducer(state = INITIAL_STATE, action) {
         state,
         action.goalId,
         goal => goal.name = action.name
-      ); /* TODO: change subgoal.id to goalId */
+      );
+    case TOGGLE_GOAL_COMPLETE:
+      return mutateGoal(
+        state,
+        action.goalId,
+        goal => goal.completed = !goal.completed
+      );
+    case DELETE_GOAL: return applyDeleteGoal(state, action); 
     default: return state;
   }
 }
@@ -175,4 +209,26 @@ export function setGoalName(goalId, name) {
     goalId: goalId,
     name: name
   }
+}
+
+/**
+ * Toggles whether or not a goal is complete
+ * @param {number} goalId ID of goal to toggle completeness of
+ */
+export function toggleGoalComplete(goalId) {
+  return {
+    type: TOGGLE_GOAL_COMPLETE,
+    goalId: goalId
+  };
+}
+
+/**
+ * Deletes a goal entirely
+ * @param {number} goalId ID of goal to delete
+ */
+export function deleteGoal(goalId) {
+  return {
+    type: DELETE_GOAL,
+    goalId: goalId
+  };
 }

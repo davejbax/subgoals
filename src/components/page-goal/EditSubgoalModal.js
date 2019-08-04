@@ -8,6 +8,7 @@ class EditSubgoalModal extends Component {
     super(props);
 
     this.handleInputTitle = this.handleInputTitle.bind(this);
+    this.handleViewChildren = this.handleViewChildren.bind(this);
   }
 
   handlePasteAsPlainText(event) {
@@ -20,6 +21,11 @@ class EditSubgoalModal extends Component {
   handleInputTitle(event) {
     const newTitle = event.target.textContent;
     this.props.onChangeTitle(this.props.subgoal, newTitle);
+  }
+
+  handleViewChildren() {
+    this.props.onRequestClose();
+    this.props.onViewChildren(this.props.subgoal);
   }
 
   render() {
@@ -60,9 +66,24 @@ class EditSubgoalModal extends Component {
             )}
           </section>
           <aside className="column-aside">
-            <button className="button-side">Mark as complete</button>
-            <button className="button-side">View children</button>
-            <button className="button-side">Delete goal</button>
+            <button
+              className="button-side"
+              onClick={() => this.props.onToggleComplete(subgoal)}
+            >
+              Mark as complete
+            </button>
+            <button
+              className="button-side"
+              onClick={this.handleViewChildren}
+            >
+              View children
+            </button>
+            <button
+              className="button-side"
+              onClick={() => this.props.onDelete(subgoal)}
+            >
+              Delete goal
+            </button>
           </aside>
         </div>
       </div>

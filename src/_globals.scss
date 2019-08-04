@@ -21,3 +21,9 @@ $bgColors: (
 	darkGrey: #666,
 	green: #6fe6a4
 );
+
+// Generate an evenly hued collection of colors
+$colorCount: 32;
+@for $i from 0 to $colorCount {
+	$bgColors: map-merge($bgColors, ('color-#{$i}': hsl($i / $colorCount * 256, 73%, 67%)));
+}
