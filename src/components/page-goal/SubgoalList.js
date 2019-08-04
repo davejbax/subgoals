@@ -96,7 +96,7 @@ class SubgoalList extends Component {
         open: true,
         anchorRef: anchorRef,
         items: [
-          { text: 'Edit subgoal', onClick: () => { this.openSubgoalDialog(subgoal); } },
+          { text: 'Edit subgoal', onClick: () => { this.openSubgoalDialog(subgoal.id); } },
           { text: 'Delete subgoal', onClick: () => { this.props.onDeleteGoal(subgoal.id); } }
         ]
       };
@@ -119,12 +119,12 @@ class SubgoalList extends Component {
     });
   }
 
-  openSubgoalDialog(subgoal) {
+  openSubgoalDialog(subgoalId) {
     this.setState(state => {
       let newState = { ...state };
 
       newState.modal.open = true;
-      newState.modal.subgoal = subgoal;
+      newState.modal.subgoalId = subgoalId;
 
       return newState;
     })
@@ -159,7 +159,7 @@ class SubgoalList extends Component {
           isExpandable={item.hasChildren}
           isExpanded={item.isExpanded}
           onToggleExpanded={toggleExpanded}
-          onClick={() => this.openSubgoalDialog(subgoal)}
+          onClick={() => this.openSubgoalDialog(subgoal.id)}
           onComplete={() => this.props.onCompleteGoal(subgoal.id)}
           onOpenMenu={(anchorRef) => this.handleOpenMenu(subgoal, anchorRef)}
           depth={depth}
@@ -206,7 +206,7 @@ class SubgoalList extends Component {
           closeTimeoutMS={200}
         >
           <EditSubgoalModalContainer
-            subgoal={this.state.modal.subgoal}
+            subgoalId={this.state.modal.subgoalId}
             onRequestClose={this.closeSubgoalDialog}
           />
         </ReactModal>

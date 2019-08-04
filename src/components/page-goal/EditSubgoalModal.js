@@ -70,7 +70,7 @@ class EditSubgoalModal extends Component {
               className="button-side"
               onClick={() => this.props.onToggleComplete(subgoal)}
             >
-              Mark as complete
+              Mark as {subgoal.completed ? 'incomplete' : 'complete'}
             </button>
             <button
               className="button-side"
