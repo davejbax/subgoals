@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { addSubgoal, moveSubgoal } from '../ducks/goals.js';
+import { addSubgoal, moveSubgoal, deleteGoal, toggleGoalComplete } from '../ducks/goals.js';
 
 import SubgoalList from '../components/page-goal/SubgoalList.js';
 
@@ -21,7 +21,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onAddKeyPress: (e, goalId) => onAddKeyPress(dispatch, e, goalId),
-  onDragEnd: (src, dst) => onDragEnd(dispatch, src, dst)
+  onDragEnd: (src, dst) => onDragEnd(dispatch, src, dst),
+  onDeleteGoal: (goalId) => dispatch(deleteGoal(goalId)),
+  onCompleteGoal: (goalId) => dispatch(toggleGoalComplete(goalId))
 });
 
 export default connect(

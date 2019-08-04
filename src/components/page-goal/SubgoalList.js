@@ -97,7 +97,7 @@ class SubgoalList extends Component {
         anchorRef: anchorRef,
         items: [
           { text: 'Edit subgoal', onClick: () => { this.openSubgoalDialog(subgoal); } },
-          { text: 'Delete subgoal', onClick: () => {} }
+          { text: 'Delete subgoal', onClick: () => { this.props.onDeleteGoal(subgoal.id); } }
         ]
       };
 
@@ -143,10 +143,6 @@ class SubgoalList extends Component {
     })
   }
 
-  handleCompleteSubgoal() {
-    // TODO
-  }
-
   renderItem({ item, depth, onExpand, onCollapse, provided, snapshot }) {
     const toggleExpanded = () => item.isExpanded ? onCollapse(item.id) : onExpand(item.id);
     const subgoal = item.data.goal;
@@ -164,7 +160,7 @@ class SubgoalList extends Component {
           isExpanded={item.isExpanded}
           onToggleExpanded={toggleExpanded}
           onClick={() => this.openSubgoalDialog(subgoal)}
-          onComplete={() => this.handleCompleteSubgoal(subgoal)}
+          onComplete={() => this.props.onCompleteGoal(subgoal.id)}
           onOpenMenu={(anchorRef) => this.handleOpenMenu(subgoal, anchorRef)}
           depth={depth}
         >
