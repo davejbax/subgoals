@@ -10,7 +10,7 @@ const mapStateToProps = state => {
   return {
     selectedGoal: goal,
     title: state.page.selectedGoalId === null ? 'Subgoals' : goal.name,
-    hasBack: state.page.selectedGoalId != null
+    hasBack: state.page.history.length > 0
   };
 };
 

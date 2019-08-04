@@ -4,7 +4,8 @@ const GO_BACK = 'subgoals/page/GO_BACK';
 
 // Reducer
 const INITIAL_STATE = {
-  selectedGoalId: null
+  selectedGoalId: null,
+  history: []
 };
 
 export default function reducer(state = INITIAL_STATE, action) {
@@ -12,13 +13,14 @@ export default function reducer(state = INITIAL_STATE, action) {
     case SET_SELECTED_GOAL:
       return {
         ...state,
-        selectedGoalId: action.goalId
+        selectedGoalId: action.goalId,
+        history: [...state.history, state.selectedGoalId]
       };
 
     case GO_BACK:
       return {
         ...state,
-        selectedGoalId: null
+        selectedGoalId: state.history.pop()
       }
     default: return state;
   }
