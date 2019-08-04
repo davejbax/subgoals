@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { setSelectedGoal } from '../actions/page.js';
+import { setSelectedGoal } from '../ducks/page.js';
 import GoalList from '../components/page-main/GoalList.js';
 
 const mapStateToProps = state => ({

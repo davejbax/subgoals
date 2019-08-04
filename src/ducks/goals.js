@@ -1,10 +1,12 @@
 import * as cloneDeep from 'lodash/cloneDeep';
-
-import { ADD_SUBGOAL, MOVE_SUBGOAL, SET_SUBGOAL_TITLE } from '../actions/types.js';
-import { breadthFirstSearch } from '../logic/trees.js';
 import { findGoalById } from '../logic/goalSelectors.js';
 
-// TODO: update goals to be loaded from a data store
+// Actions
+const ADD_SUBGOAL = 'subgoals/goals/ADD_SUBGOAL';
+const MOVE_SUBGOAL = 'subgoals/goals/MOVE_SUBGOAL';
+const SET_SUBGOAL_TITLE = 'subgoals/goals/SET_SUBGOAL_TITLE';
+
+// Reducer
 const INITIAL_STATE = {
   goals: [
     {
@@ -71,13 +73,13 @@ function applyAddSubgoal(state, action) {
     newState.nextId++;
   }
 
-  // Update the selected goal because it will reference an outdated
-  // goal (i.e. one belonging to the old state, which has been deep copied)
-  newState.selectedGoal = breadthFirstSearch(
-    { subgoals: newState.goals },
-    (goal) => newState.selectedGoalId === goal.id,
-    (goal) => goal.subgoals
-  );
+  // // Update the selected goal because it will reference an outdated
+  // // goal (i.e. one belonging to the old state, which has been deep copied)
+  // newState.selectedGoal = breadthFirstSearch(
+  //   { subgoals: newState.goals },
+  //   (goal) => newState.selectedGoalId === goal.id,
+  //   (goal) => goal.subgoals
+  // );
 
   return newState;
 }
@@ -104,24 +106,73 @@ function applyMoveSubgoal(state, action) {
   return newState;
 }
 
-function applySetSubgoalTitle(state, action) {
-  // Clone state
+function mutateGoal(state, goalId, callback) {
+  // Clone state and find goal object by given ID
   const newState = cloneDeep(state);
+  const goal = findGoalById(newState.goals, goalId);
 
-  // Find subgoal and update its title
-  const subgoal = findGoalById(newState.goals, action.subgoal.id);
-  subgoal.name = action.title;
+  // Execute callback to update whatever property of the goal
+  callback(goal);
 
+  // Return new state, which contains the modified goal object
   return newState;
 }
 
-function goalsReducer(state = INITIAL_STATE, action) {
+export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case ADD_SUBGOAL: return applyAddSubgoal(state, action);
     case MOVE_SUBGOAL: return applyMoveSubgoal(state, action);
-    case SET_SUBGOAL_TITLE: return applySetSubgoalTitle(state, action);
+    case SET_SUBGOAL_TITLE:
+      return mutateGoal(
+        state,
+        action.subgoal.id,
+        goal => goal.name = action.title
+      ); /* TODO: change subgoal.id to goalId */
     default: return state;
   }
 }
 
-export default goalsReducer;
+// Action creators
+/**
+ * Creates a new subgoal and adds it to a (selected) goal. This will be
+ * a top-level subgoal (i.e. not nested).
+ * 
+ * @param {string} name Name of subgoal
+ * @param {number} goalId ID of goal to add subgoal to
+ */
+export function addSubgoal(name, goalId) {
+  return {
+    type: ADD_SUBGOAL,
+    name: name,
+    goalId: goalId
+  };
+}
+
+/**
+ * Moves a subgoal from one position to another in the selected goal.
+ * 
+ * @param {{parentId: number, index: number}} src Subgoal position before move
+ * @param {{parentId: number, index: number}} dst Subgoal position after move
+ */
+export function moveSubgoal(src, dst) {
+  return {
+    type: MOVE_SUBGOAL,
+    src: src,
+    dst: dst
+  };
+}
+
+// TODO: change to setGoalTitle/setGoalName
+/**
+ * Sets a subgoal's title 
+ * 
+ * @param {Goal} subgoal Subgoal for which to change title/name
+ * @param {string} title New title
+ */
+export function setSubgoalTitle(subgoal, title) {
+  return {
+    type: SET_SUBGOAL_TITLE,
+    subgoal: subgoal,
+    title: title
+  }
+}

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { addSubgoal, moveSubgoal } from '../actions/goals.js';
+import { addSubgoal, moveSubgoal } from '../ducks/goals.js';
 
 import SubgoalList from '../components/page-goal/SubgoalList.js';
 

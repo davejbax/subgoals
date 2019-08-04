@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import { findGoalById } from '../logic/goalSelectors.js';
-import { goBack } from '../actions/page.js';
+import { goBack } from '../ducks/page.js';
 import App from '../components/App.js';
 
 const mapStateToProps = state => {

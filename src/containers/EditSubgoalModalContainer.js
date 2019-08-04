@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { setSubgoalTitle } from '../actions/goals.js';
+import { setSubgoalTitle } from '../ducks/goals.js';
 import EditSubgoalModal from '../components/page-goal/EditSubgoalModal.js';
 
 const mapStateToProps = state => ({
