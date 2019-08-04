@@ -4,7 +4,7 @@ import { findGoalById } from '../logic/goalSelectors.js';
 // Actions
 const ADD_SUBGOAL = 'subgoals/goals/ADD_SUBGOAL';
 const MOVE_SUBGOAL = 'subgoals/goals/MOVE_SUBGOAL';
-const SET_SUBGOAL_TITLE = 'subgoals/goals/SET_SUBGOAL_TITLE';
+const SET_GOAL_NAME = 'subgoals/goals/SET_GOAL_NAME';
 
 // Reducer
 const INITIAL_STATE = {
@@ -122,11 +122,11 @@ export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case ADD_SUBGOAL: return applyAddSubgoal(state, action);
     case MOVE_SUBGOAL: return applyMoveSubgoal(state, action);
-    case SET_SUBGOAL_TITLE:
+    case SET_GOAL_NAME:
       return mutateGoal(
         state,
-        action.subgoal.id,
-        goal => goal.name = action.title
+        action.goalId,
+        goal => goal.name = action.name
       ); /* TODO: change subgoal.id to goalId */
     default: return state;
   }
@@ -164,15 +164,15 @@ export function moveSubgoal(src, dst) {
 
 // TODO: change to setGoalTitle/setGoalName
 /**
- * Sets a subgoal's title 
+ * Sets a (sub?)goal's name
  * 
- * @param {Goal} subgoal Subgoal for which to change title/name
- * @param {string} title New title
+ * @param {number} goalId ID of goal for which to change name
+ * @param {string} name New goal name
  */
-export function setSubgoalTitle(subgoal, title) {
+export function setGoalName(goalId, name) {
   return {
-    type: SET_SUBGOAL_TITLE,
-    subgoal: subgoal,
-    title: title
+    type: SET_GOAL_NAME,
+    goalId: goalId,
+    name: name
   }
 }
