@@ -67,6 +67,19 @@ class OverflowMenu extends React.Component {
 
     // Get position of element to which to anchor the menu
     const pos = this.props.anchorRef.current.getBoundingClientRect();
+    let style;
+    if (window.innerWidth < 1100) { // TODO: standardize this constant
+      const right = window.innerWidth - pos.right;
+      style = {
+        top: `${pos.top}px`,
+        right: `${right}px`
+      };
+    } else {
+      style = {
+        top: `${pos.top}px`,
+        left: `${pos.left}px`
+      }
+    }
     
     // Utility function for closing menu when onClick() returns true
     const createClickHandler = (onClick) => {
@@ -81,10 +94,7 @@ class OverflowMenu extends React.Component {
       this.props.visible &&
       <div 
         className={`overflow-menu ${this.props.visible ? 'visible' : ''}`}
-        style={{
-          top: `${pos.top}px`,
-          left: `${pos.left}px`
-        }}
+        style={style}
         tabIndex="-1"
         ref={(ref) => {ref && ref.focus(); this.menuRef = ref}}
         onBlur={this.handleBlur}
