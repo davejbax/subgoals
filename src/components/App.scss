@@ -137,7 +137,7 @@ button {
 /* Modals */
 .modal-overlay {
 	background: rgba(150, 150, 150, 0.4);
-	position: fixed;
+	position: absolute;
 	top: 0;
 	left: 0;
 	right: 0;

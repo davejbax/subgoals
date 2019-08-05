@@ -9,6 +9,7 @@ import NavBar from './common/NavBar.js';
 
 // CSS
 import './App.scss';
+import GlobalDialog from '../containers/GlobalDialog.js';
 
 const App = ({ title, selectedGoal, hasBack, onGoBack }) => {
   const color = selectedGoal != null
@@ -30,6 +31,7 @@ const App = ({ title, selectedGoal, hasBack, onGoBack }) => {
             <PageGoal goal={selectedGoal} />
         }
       </section>
+      <GlobalDialog />
     </div>
   );
 };

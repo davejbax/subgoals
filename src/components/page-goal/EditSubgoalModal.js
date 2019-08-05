@@ -80,7 +80,7 @@ class EditSubgoalModal extends Component {
             </button>
             <button
               className="button-side"
-              onClick={() => this.props.onDelete(subgoal)}
+              onClick={() => this.props.onDelete(subgoal, this.props.onRequestClose)}
             >
               Delete goal
             </button>
