@@ -4,7 +4,7 @@ import { setGoalName, toggleGoalComplete, deleteGoal } from '../ducks/goals.js';
 import { setSelectedGoal } from '../ducks/page.js';
 import EditSubgoalModal from '../components/page-goal/EditSubgoalModal.js';
 import { findGoalById } from '../logic/goalSelectors.js';
-import { openInfoDialog, openConfirmDialog } from '../ducks/dialog.js';
+import { openConfirmDialog } from '../ducks/dialog.js';
 
 function onDelete(dispatch, subgoal, onDeleted) {
   const subgoalId = subgoal.id;
