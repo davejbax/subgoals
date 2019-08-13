@@ -3,8 +3,8 @@ import React from 'react';
 import './SubgoalListItem.scss';
 
 const SubgoalListItem = ({
+  hasChildren,
   isComplete,
-  isExpandable,
   isExpanded,
   onToggleExpanded,
   onClick,
@@ -23,8 +23,9 @@ const SubgoalListItem = ({
       {/* Complete/check button */}
       <button
         href="#"
-        className="button-complete"
+        className='button-complete'
         onClick={onComplete}
+        disabled={hasChildren}
       >
         <i className="fas fa-check"></i>
       </button>
@@ -38,7 +39,7 @@ const SubgoalListItem = ({
       </div>
 
       {/* Expand/collapse button/indicator */}
-      {isExpandable && 
+      {hasChildren && 
         <div
           className="toggle-expand"
           onClick={onToggleExpanded}

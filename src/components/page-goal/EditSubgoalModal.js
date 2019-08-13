@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import { isLeafNode } from '../../logic/goalProcessing.js';
 import './EditSubgoalModal.scss';
 
 class EditSubgoalModal extends Component {
@@ -66,18 +67,21 @@ class EditSubgoalModal extends Component {
             )}
           </section>
           <aside className="column-aside">
-            <button
-              className="button-side"
-              onClick={() => this.props.onToggleComplete(subgoal)}
-            >
-              Mark as {subgoal.completed ? 'incomplete' : 'complete'}
-            </button>
-            <button
-              className="button-side"
-              onClick={this.handleViewChildren}
-            >
-              View children
-            </button>
+            {isLeafNode(subgoal) ?
+              <button
+                className="button-side"
+                onClick={() => this.props.onToggleComplete(subgoal)}
+              >
+                Mark as {subgoal.completed ? 'incomplete' : 'complete'}
+              </button>
+            :
+              <button
+                className="button-side"
+                onClick={this.handleViewChildren}
+              >
+                View children
+              </button>
+            }
             <button
               className="button-side"
               onClick={() => this.props.onDelete(subgoal, this.props.onRequestClose)}

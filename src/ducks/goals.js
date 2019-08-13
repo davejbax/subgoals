@@ -1,6 +1,7 @@
 import * as cloneDeep from 'lodash/cloneDeep';
 import { findGoalById } from '../logic/goalSelectors.js';
 import { breadthFirstSearch } from '../logic/trees.js';
+import { createSelector } from 'reselect';
 
 // Actions
 const ADD_SUBGOAL = 'subgoals/goals/ADD_SUBGOAL';
@@ -232,3 +233,55 @@ export function deleteGoal(goalId) {
     goalId: goalId
   };
 }
+
+// Selectors
+export const getGoalsWithCompleteness = createSelector(
+  [state => state.goals.goals],
+  (goals) => {
+    const newGoals = cloneDeep(goals);
+    const markCompletedImplicit = (goal) => {
+      // If there are children, we must go through them all and determine
+      // whether they are completed. If they are all completed (either explicit
+      // or implicit), we can mark this parent as implicitly completed.
+      if (goal.subgoals.length > 0) {
+        // Set the completed property to false, as we are not a leaf and so it
+        // does not apply
+        goal.completed = false;
+
+        // Recursively check whether all subgoals are complete
+        let allSubgoalsCompleted = true;
+        for (let subgoal of goal.subgoals) {
+          if (!markCompletedImplicit(subgoal)) {
+            allSubgoalsCompleted = false;
+          }
+        }
+
+        // If all subgoals are completed (and they will now have been marked
+        // recursively as implicitly complete where appropriate), then we are
+        // implicitly completed and should add this property. Otherwise, return
+        // false.
+        if (allSubgoalsCompleted) {
+          goal.completedImplicit = true;
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return goal.completed;
+      }
+    }
+
+    // Go through each root goal and carry out the implicit completeness marking
+    for (let goal of newGoals) {
+      markCompletedImplicit(goal);
+    }
+
+    // Return this new list of goals, which is a clone of the old list, with all
+    // goals that are implicitly complete (i.e. all children either leaves that 
+    // are completed, or inodes that are implicilty complete) containing a new
+    // property, 'completedImplicit', which is set to true.
+    // All goals that have children have completed set to false, since they
+    // cannot be explicitly completed.
+    return newGoals;
+  }
+)

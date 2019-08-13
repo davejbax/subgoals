@@ -63,3 +63,15 @@ $maxDepth: 10;
 		transform: scale(1);
 	}
 }
+
+.subgoal-list-item .button-complete:disabled:before {
+	background: map-get($bgColors, primary);
+}
+
+.subgoal-list-item:hover .button-complete:disabled {
+	opacity: 0;
+}
+
+.subgoal-list-item.complete:hover .button-complete:disabled {
+	opacity: 1;
+}

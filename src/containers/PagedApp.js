@@ -1,11 +1,15 @@
 import { connect } from 'react-redux';
 
 import { findGoalById } from '../logic/goalSelectors.js';
+import { getGoalsWithCompleteness } from '../ducks/goals.js';
 import { goBack } from '../ducks/page.js';
 import App from '../components/App.js';
 
 const mapStateToProps = state => {
-  const goal = findGoalById(state.goals.goals, state.page.selectedGoalId);
+  const goal = findGoalById(
+    getGoalsWithCompleteness(state),
+    state.page.selectedGoalId
+  );
 
   return {
     selectedGoal: goal,

@@ -2,6 +2,7 @@ import Tree from '@atlaskit/tree';
 import React, { Component } from 'react';
 import ReactModal from 'react-modal';
 import { flattenGoals } from '../../logic/goalSelectors.js';
+import { isGoalComplete } from '../../logic/goalProcessing.js';
 import OverflowMenu from '../common/OverflowMenu.js';
 import EditSubgoalModalContainer from '../../containers/EditSubgoalModalContainer.js';
 import SubgoalListItem from './SubgoalListItem.js';
@@ -146,6 +147,8 @@ class SubgoalList extends Component {
   renderItem({ item, depth, onExpand, onCollapse, provided, snapshot }) {
     const toggleExpanded = () => item.isExpanded ? onCollapse(item.id) : onExpand(item.id);
     const subgoal = item.data.goal;
+    const isComplete = subgoal.completedImplicit === true
+      || subgoal.completed === true;
 
     return (
       <span
@@ -155,8 +158,8 @@ class SubgoalList extends Component {
         style={provided.draggableProps.style}
       >
         <SubgoalListItem
-          isComplete={subgoal.completed}
-          isExpandable={item.hasChildren}
+          hasChildren={item.hasChildren}
+          isComplete={isComplete}
           isExpanded={item.isExpanded}
           onToggleExpanded={toggleExpanded}
           onClick={() => this.openSubgoalDialog(subgoal.id)}
