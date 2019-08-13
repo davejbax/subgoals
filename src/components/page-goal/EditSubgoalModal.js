@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ContentEditable from 'react-contenteditable';
 
 import { isLeafNode } from '../../logic/goalProcessing.js';
 import './EditSubgoalModal.scss';
@@ -10,6 +11,7 @@ class EditSubgoalModal extends Component {
 
     this.handleInputTitle = this.handleInputTitle.bind(this);
     this.handleViewChildren = this.handleViewChildren.bind(this);
+    this.titleRef = React.createRef();
   }
 
   handlePasteAsPlainText(event) {
@@ -20,7 +22,13 @@ class EditSubgoalModal extends Component {
   }
 
   handleInputTitle(event) {
-    const newTitle = event.target.textContent;
+    let newTitle = this.titleRef.current.textContent;
+
+    // Don't trigger change if we haven't changed!
+    if (newTitle === this.props.subgoal.name) {
+      return;
+    }
+
     this.props.onChangeTitle(this.props.subgoal, newTitle);
   }
 
@@ -42,14 +50,16 @@ class EditSubgoalModal extends Component {
     return (
       <div>
         <header>
-          <h3
+          <ContentEditable
             className="editable"
-            contentEditable="true"
+            innerRef={this.titleRef}
+            html={this.props.subgoal.name}
+            disabled={false}
+            onChange={this.handleInputTitle}
+            tagName="h3"
             onPaste={this.handlePasteAsPlainText}
-            onInput={this.handleInputTitle}
-          >
-            {subgoal.name}
-          </h3>
+            // onInput={this.handleInputTitle}
+          />
           <button
             className="button-close"
             onClick={this.props.onRequestClose}
