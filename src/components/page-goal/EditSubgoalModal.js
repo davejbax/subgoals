@@ -44,7 +44,7 @@ class EditSubgoalModal extends Component {
       return null;
     }
 
-    const completedChildren = subgoal.subgoals.filter(goal => goal.completed).length;
+    const completedChildren = subgoal.subgoals.filter(goal => goal.completed || goal.completedImplicit).length;
     const totalChildren = subgoal.subgoals.length;
 
     return (

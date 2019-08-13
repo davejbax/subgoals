@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { setGoalName, toggleGoalComplete, deleteGoal } from '../ducks/goals.js';
+import { setGoalName, toggleGoalComplete, deleteGoal, getGoalsWithCompleteness } from '../ducks/goals.js';
 import { setSelectedGoal } from '../ducks/page.js';
 import EditSubgoalModal from '../components/page-goal/EditSubgoalModal.js';
 import { findGoalById } from '../logic/goalSelectors.js';
@@ -21,7 +21,7 @@ function onDelete(dispatch, subgoal, onDeleted) {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  subgoal: findGoalById(state.goals.goals, ownProps.subgoalId)
+  subgoal: findGoalById(getGoalsWithCompleteness(state), ownProps.subgoalId)
 });
 
 const mapDispatchToProps = dispatch => ({
