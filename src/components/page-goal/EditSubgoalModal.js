@@ -74,7 +74,10 @@ class EditSubgoalModal extends Component {
             {totalChildren > 0 ? (
               <p>{completedChildren} / {totalChildren} subgoals completed</p>
             ) : (
-              <p>{subgoal.completed ? 'Completed' : 'Incomplete' }</p>
+              <p>
+                <i className={`progress-indicator fas fa-${subgoal.completed ? 'check' : 'times'}`}></i>
+                {subgoal.completed ? 'Completed' : 'Incomplete' }
+              </p>
             )}
             {subgoal.daily !== false && (
               <span>

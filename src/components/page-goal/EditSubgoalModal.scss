@@ -101,3 +101,15 @@ p {
     background: #CCC;
   }
 }
+
+.progress-indicator {
+  margin-right: 0.5em;
+
+  &.fa-check {
+    color: map-get($bgColors, green);
+  }
+
+  &.fa-times {
+    color: map-get($bgColors, salmon);
+  }
+}
