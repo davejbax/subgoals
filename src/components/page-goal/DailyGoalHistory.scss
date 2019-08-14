@@ -1,0 +1,95 @@
+@import '../../_globals.scss';
+
+.daily-month {
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: none;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.daily-month td,
+.daily-month th {
+  vertical-align: middle;
+  text-align: center;
+  padding: $paddingSmall * 0.8;
+}
+
+.daily-month tr {
+  border-bottom: 1px solid #CCC;
+}
+
+.daily-month thead {
+  background: map-get($bgColors, grey);
+  color: #666;
+}
+
+.daily-month td {
+  position: relative;
+  z-index: 2;
+
+  cursor: pointer;
+  user-select: none;
+
+  &.disabled {
+    color: #CCC;
+  }
+}
+
+.daily-month td:before {
+  content: '';
+
+  position: absolute;
+  border-radius: 50%;
+  width: 100%;
+  padding-bottom: 100%;
+  display: block;
+  
+  top: 50%;
+  left: 0;
+  margin-top: -50%;
+
+  z-index: -1;
+
+  background: rgba(0, 0, 0, 0.2);
+  transform: scale(0);
+  transition: all 0.2s ease-in-out;
+}
+
+.daily-month td:hover:before {
+  transform: scale(0.5)!important;
+}
+
+@for $count from 1 to 13 {
+  .daily-month td.count-#{$count} {
+    color: white;
+
+    &:before {
+      @if $count <= 6 {
+        background: mix(#7365e8, rgba(0, 0, 0, 0.2), $count / 6 * 100%);
+      } @else {
+        background: mix(desaturate(darken(#7365e8, 40%), 50%), #7365e8, ($count - 6) / 6 * 100%);
+      }
+      
+      transform: scale(0.4 + $count / 12 * 0.3);
+    }
+  }
+}
+
+.month-select {
+  display: flex;
+  align-items: center;
+  user-select: none;
+}
+
+.month-select span {
+  flex: 1;
+  text-align: center;
+  font-weight: bold;
+}
+
+.month-select button {
+  padding: $paddingSmall * 0.8;
+  font-size: 1.5em;
+  color: #666;
+}

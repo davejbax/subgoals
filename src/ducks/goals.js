@@ -9,6 +9,9 @@ const MOVE_SUBGOAL = 'subgoals/goals/MOVE_SUBGOAL';
 const SET_GOAL_NAME = 'subgoals/goals/SET_GOAL_NAME';
 const TOGGLE_GOAL_COMPLETE = 'subgoals/goals/TOGGLE_GOAL_COMPLETE';
 const DELETE_GOAL = 'subgoals/goals/DELETE_GOAL';
+const ADD_TO_DAILY = 'subgoals/goals/ADD_TO_DAILY';
+const REMOVE_FROM_DAILY = 'subgoals/goals/REMOVE_FROM_DAILY';
+const REMOVE_LATEST_FROM_DAILY = 'subgoals/goals/REMOVE_LATEST_FROM_DAILY';
 
 // Reducer
 const INITIAL_STATE = {
@@ -42,6 +45,96 @@ const INITIAL_STATE = {
               subgoals: []
             }
           ]
+        },
+        {
+          id: 5,
+          name: 'Daily test',
+          completed: false,
+          points: 0,
+          daily: {
+            type: 'manual',
+            history: [
+              '2019-08-12T12:00:00.000Z',
+              '2019-08-13T12:00:00.000Z',
+              '2019-08-13T12:00:00.000Z',
+              '2019-08-14T12:00:00.000Z',
+              '2019-08-14T12:00:00.000Z',
+              '2019-08-14T12:00:00.000Z',
+              '2019-08-15T12:00:00.000Z',
+              '2019-08-15T12:00:00.000Z',
+              '2019-08-15T12:00:00.000Z',
+              '2019-08-15T12:00:00.000Z',
+              '2019-08-16T12:00:00.000Z',
+              '2019-08-16T12:00:00.000Z',
+              '2019-08-16T12:00:00.000Z',
+              '2019-08-16T12:00:00.000Z',
+              '2019-08-16T12:00:00.000Z',
+              '2019-08-17T12:00:00.000Z',
+              '2019-08-17T12:00:00.000Z',
+              '2019-08-17T12:00:00.000Z',
+              '2019-08-17T12:00:00.000Z',
+              '2019-08-17T12:00:00.000Z',
+              '2019-08-17T12:00:00.000Z',
+              '2019-08-18T12:00:00.000Z',
+              '2019-08-18T12:00:00.000Z',
+              '2019-08-18T12:00:00.000Z',
+              '2019-08-18T12:00:00.000Z',
+              '2019-08-18T12:00:00.000Z',
+              '2019-08-18T12:00:00.000Z',
+              '2019-08-18T12:00:00.000Z',
+              '2019-08-19T12:00:00.000Z',
+              '2019-08-19T12:00:00.000Z',
+              '2019-08-19T12:00:00.000Z',
+              '2019-08-19T12:00:00.000Z',
+              '2019-08-19T12:00:00.000Z',
+              '2019-08-19T12:00:00.000Z',
+              '2019-08-19T12:00:00.000Z',
+              '2019-08-19T12:00:00.000Z',
+              '2019-08-20T12:00:00.000Z',
+              '2019-08-20T12:00:00.000Z',
+              '2019-08-20T12:00:00.000Z',
+              '2019-08-20T12:00:00.000Z',
+              '2019-08-20T12:00:00.000Z',
+              '2019-08-20T12:00:00.000Z',
+              '2019-08-20T12:00:00.000Z',
+              '2019-08-20T12:00:00.000Z',
+              '2019-08-20T12:00:00.000Z',
+              '2019-08-21T12:00:00.000Z',
+              '2019-08-21T12:00:00.000Z',
+              '2019-08-21T12:00:00.000Z',
+              '2019-08-21T12:00:00.000Z',
+              '2019-08-21T12:00:00.000Z',
+              '2019-08-21T12:00:00.000Z',
+              '2019-08-21T12:00:00.000Z',
+              '2019-08-21T12:00:00.000Z',
+              '2019-08-21T12:00:00.000Z',
+              '2019-08-21T12:00:00.000Z',
+              '2019-08-22T12:00:00.000Z',
+              '2019-08-22T12:00:00.000Z',
+              '2019-08-22T12:00:00.000Z',
+              '2019-08-22T12:00:00.000Z',
+              '2019-08-22T12:00:00.000Z',
+              '2019-08-22T12:00:00.000Z',
+              '2019-08-22T12:00:00.000Z',
+              '2019-08-22T12:00:00.000Z',
+              '2019-08-22T12:00:00.000Z',
+              '2019-08-22T12:00:00.000Z',
+              '2019-08-22T12:00:00.000Z',
+              '2019-08-23T12:00:00.000Z',
+              '2019-08-23T12:00:00.000Z',
+              '2019-08-23T12:00:00.000Z',
+              '2019-08-23T12:00:00.000Z',
+              '2019-08-23T12:00:00.000Z',
+              '2019-08-23T12:00:00.000Z',
+              '2019-08-23T12:00:00.000Z',
+              '2019-08-23T12:00:00.000Z',
+              '2019-08-23T12:00:00.000Z',
+              '2019-08-23T12:00:00.000Z',
+              '2019-08-23T12:00:00.000Z',
+              '2019-08-23T12:00:00.000Z'
+            ]
+          },
+          subgoals: []
         }
       ],
       completed: false,
@@ -58,7 +151,7 @@ const INITIAL_STATE = {
       daily: false
     }
   ],
-  nextId: 5
+  nextId: 6
 };
 
 function applyAddSubgoal(state, action) {
@@ -163,6 +256,67 @@ export default function reducer(state = INITIAL_STATE, action) {
         goal => goal.completed = !goal.completed
       );
     case DELETE_GOAL: return applyDeleteGoal(state, action); 
+    case ADD_TO_DAILY:
+      return mutateGoal(
+        state,
+        action.goalId,
+        goal => {
+          if (!goal.daily) {
+            return;
+          }
+
+          goal.daily.history.push(action.timestamp);
+        }
+      );
+    case REMOVE_FROM_DAILY:
+      return mutateGoal(
+        state,
+        action.goalId,
+        goal => {
+          // If goal is not daily, ignore action
+          if (!goal.daily) {
+            return;
+          }
+
+          // Find timestamp and remove if it exists
+          const index = goal.daily.history.indexOf(action.timestamp);
+          if (index > -1) {
+            goal.daily.history.splice(index, 1);
+          }
+        }
+      )
+    case REMOVE_LATEST_FROM_DAILY:
+      return mutateGoal(
+        state,
+        action.goalId,
+        goal => {
+          const target = new Date(action.timestamp);
+          const history = goal.daily.history
+            .map(timestamp => new Date(timestamp))
+            .filter(date => date.getFullYear() === target.getFullYear()
+              && date.getMonth() === target.getMonth()
+              && date.getDate() === target.getDate())
+            .sort((a, b) => {
+              if (a > b) return 1;
+              else if (a < b) return -1;
+              else return 0;
+            })
+            .reverse();
+          
+          // If we found a matching item in the history, remove the latest
+          // one (the 'history' array is in sorted order by desc time)
+          if (history.length > 0) {
+            const latestTimestamp = history[0].toISOString();
+            const index = goal.daily.history.indexOf(latestTimestamp);
+
+            if (index > -1) {
+              goal.daily.history.splice(index, 1);
+            } else {
+              console.warn('Inconsistency: could not find index of history timestamp');
+            }
+          }
+        }
+      )
     default: return state;
   }
 }
@@ -232,6 +386,54 @@ export function deleteGoal(goalId) {
     type: DELETE_GOAL,
     goalId: goalId
   };
+}
+
+/**
+ * Adds a 'completion' of a daily goal to its history, i.e. marks a particular
+ * date/time as completed on this date/time.
+ * 
+ * @param {number} goalId ID of goal
+ * @param {string} timestamp ISO8601 timestamp of when the daily goal was done
+ */
+export function addToDaily(goalId, timestamp) {
+  return {
+    type: ADD_TO_DAILY,
+    goalId: goalId,
+    timestamp: timestamp
+  };
+}
+
+/**
+ * Removes a 'completion' of a daily goal from its history.
+ * 
+ * @param {number} goalId ID of goal
+ * @param {string} timestamp ISO8601 timestamp of completion to delete
+ */
+export function removeFromDaily(goalId, timestamp) {
+  return {
+    type: REMOVE_FROM_DAILY,
+    goalId: goalId,
+    timestamp: timestamp
+  }
+}
+
+/**
+ * Removes the latest (i.e. last one in a given day/month/year) 'completion'
+ * of a daily goal from its history.
+ * 
+ * The timestamp need not have a time different to 00:00; it is disregarded
+ * entirely.
+ * 
+ * @param {number} goalId ID of goal
+ * @param {string} timestamp ISO8601 timestamp; time is ignored, as the
+ *                           the latest time from the day of the timestamp used
+ */
+export function removeLatestFromDaily(goalId, timestamp) {
+  return {
+    type: REMOVE_LATEST_FROM_DAILY,
+    goalId: goalId,
+    timestamp: timestamp
+  }
 }
 
 // Selectors

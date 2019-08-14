@@ -3,6 +3,7 @@ import ContentEditable from 'react-contenteditable';
 
 import { isLeafNode } from '../../logic/goalProcessing.js';
 import './EditSubgoalModal.scss';
+import DailyGoalHistory from './DailyGoalHistory.js';
 
 class EditSubgoalModal extends Component {
 
@@ -74,6 +75,16 @@ class EditSubgoalModal extends Component {
               <p>{completedChildren} / {totalChildren} subgoals completed</p>
             ) : (
               <p>{subgoal.completed ? 'Completed' : 'Incomplete' }</p>
+            )}
+            {subgoal.daily !== false && (
+              <span>
+                <h4>Daily</h4>
+                <DailyGoalHistory
+                  data={subgoal.daily}
+                  onMarkDay={this.props.onMarkDay.bind(null, subgoal)}
+                  onUnmarkDay={this.props.onUnmarkDay.bind(null, subgoal)}
+                />
+              </span>
             )}
           </section>
           <aside className="column-aside">

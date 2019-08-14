@@ -41,6 +41,7 @@ h3 {
 
 .columns .column-aside {
   flex: 6;
+  margin-left: $padding;
 }
 
 @media screen and (max-width: $breakSmall) {
