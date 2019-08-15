@@ -3,6 +3,7 @@ import { addSubgoal, moveSubgoal, deleteGoal, toggleGoalComplete } from '../duck
 import { openConfirmDialog } from '../ducks/dialog.js';
 
 import SubgoalList from '../components/page-goal/SubgoalList.js';
+import { showNotification } from '../ducks/notifications.js';
 
 function onAddKeyPress(dispatch, e, goalId) {
   if (e.key === 'Enter' && !e.shiftKey) {    
@@ -35,7 +36,13 @@ const mapDispatchToProps = dispatch => ({
   onAddKeyPress: (e, goalId) => onAddKeyPress(dispatch, e, goalId),
   onDragEnd: (src, dst) => onDragEnd(dispatch, src, dst),
   onDeleteGoal: (goalId) => onDeleteGoal(dispatch, goalId),
-  onCompleteGoal: (goalId) => dispatch(toggleGoalComplete(goalId))
+  onCompleteGoal: (goalId) => dispatch(toggleGoalComplete(goalId)),
+  onErrorNotification: (message) => dispatch(showNotification(
+    new Date().getTime(), // Use Unix timestamp as 'unique key'
+    message,              // Message to show
+    'Dismiss',            // Action text
+    5000                  // Dismiss after 5s
+  ))
 });
 
 export default connect(

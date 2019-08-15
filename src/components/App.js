@@ -10,6 +10,7 @@ import NavBar from './common/NavBar.js';
 // CSS
 import './App.scss';
 import GlobalDialog from '../containers/GlobalDialog.js';
+import GlobalNotification from '../containers/GlobalNotification.js';
 
 const App = ({ title, selectedGoal, hasBack, onGoBack }) => {
   const color = selectedGoal != null
@@ -32,6 +33,7 @@ const App = ({ title, selectedGoal, hasBack, onGoBack }) => {
         }
       </section>
       <GlobalDialog />
+      <GlobalNotification />
     </div>
   );
 };

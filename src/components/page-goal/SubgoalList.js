@@ -1,8 +1,8 @@
 import Tree from '@atlaskit/tree';
 import React, { Component } from 'react';
 import ReactModal from 'react-modal';
-import { flattenGoals } from '../../logic/goalSelectors.js';
-import { isGoalComplete } from '../../logic/goalProcessing.js';
+import { flattenGoals, findGoalById } from '../../logic/goalSelectors.js';
+import { isGoalComplete, isAllowedChildren } from '../../logic/goalProcessing.js';
 import OverflowMenu from '../common/OverflowMenu.js';
 import EditSubgoalModalContainer from '../../containers/EditSubgoalModalContainer.js';
 import SubgoalListItem from './SubgoalListItem.js';
@@ -20,6 +20,7 @@ class SubgoalList extends Component {
     this.handleCloseMenu = this.handleCloseMenu.bind(this);
     this.handleExpand = this.handleExpand.bind(this);
     this.handleCollapse = this.handleCollapse.bind(this);
+    this.handleDragEnd = this.handleDragEnd.bind(this);
 
     this.openSubgoalDialog = this.openSubgoalDialog.bind(this);
     this.closeSubgoalDialog = this.closeSubgoalDialog.bind(this);
@@ -120,6 +121,23 @@ class SubgoalList extends Component {
     });
   }
 
+  handleDragEnd(src, dst) {
+    // Sanity check; dst is null when we do nothing
+    if (!dst)
+      return;
+    
+    // Find parent goal, and stop if we can't
+    const parentGoal = findGoalById([ this.props.goal ], dst.parentId);
+    if (parentGoal === null)
+      return;
+
+    if (isAllowedChildren(parentGoal)) {
+      this.props.onDragEnd(src, dst);
+    } else {
+      this.props.onErrorNotification('Daily goals cannot have subgoals');
+    }
+  }
+
   openSubgoalDialog(subgoalId) {
     this.setState(state => {
       let newState = { ...state };
@@ -183,7 +201,7 @@ class SubgoalList extends Component {
           renderItem={this.renderItem}
           onExpand={this.handleExpand}
           onCollapse={this.handleCollapse}
-          onDragEnd={this.props.onDragEnd}
+          onDragEnd={this.handleDragEnd}
           offsetPerLevel={0}
           isDragEnabled
           isNestingEnabled

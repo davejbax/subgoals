@@ -83,3 +83,7 @@ export function isGoalComplete(goal) {
   // If none of the criteria are met, then we are incomplete
   return false;
 }
+
+export function isAllowedChildren(goal) {
+  return goal.daily === false;
+}
