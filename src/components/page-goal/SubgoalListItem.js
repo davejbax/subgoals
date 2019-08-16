@@ -6,6 +6,7 @@ const SubgoalListItem = ({
   hasChildren,
   isComplete,
   isExpanded,
+  isDaily,
   onToggleExpanded,
   onClick,
   onComplete,
@@ -46,6 +47,13 @@ const SubgoalListItem = ({
         >
           <i className={'fas fa-chevron-' + (isExpanded ? 'up' : 'down')}></i>
         </div>
+      }
+
+      {/* Daily goal indicator */}
+      {isDaily &&
+        <span class="daily-indicator">
+          <i className="fas fa-calendar"></i>
+        </span>
       }
 
       {/* Overflow button */}

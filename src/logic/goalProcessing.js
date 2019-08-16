@@ -64,26 +64,14 @@ export function isLeafNode(goal) {
  * 
  * @param {Goal} goal Goal to check completeness of
  */
-export function isGoalComplete(goal) {
-  // If the goal is completed, return true
-  if (goal.completed === true && goal.subgoals.length === 0)
-    return true;
+export function isGoalCompleted(goal) {
+  return goal.completed === true || goal.completedImplicit === true;
+}
 
-  // If all of the goal's children are completed, return true
-  if (goal.subgoals.length > 0) {
-    for (let subgoal of goal.subgoals) {
-      if (!isGoalComplete(subgoal))
-        return false;
-    }
-    
-    // We didn't encounter an incomplete subgoal, so we are therefore complete
-    return true;
-  }
-
-  // If none of the criteria are met, then we are incomplete
-  return false;
+export function isDailyGoal(goal) {
+  return goal.daily !== false;
 }
 
 export function isAllowedChildren(goal) {
-  return goal.daily === false;
+  return !isDailyGoal(goal);
 }

@@ -75,3 +75,7 @@ $maxDepth: 10;
 .subgoal-list-item.complete:hover .button-complete:disabled {
 	opacity: 1;
 }
+
+.subgoal-list-item .daily-indicator {
+	color: map-get($bgColors, grey);
+}
