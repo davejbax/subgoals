@@ -48,7 +48,9 @@ class DailyGoalHistory extends Component {
     date.setDate(1);
 
     // Calculate the number of days before so we start on a Monday
-    const daysBefore = (date.getDay() - 1) % 7;
+    let daysBefore = (date.getDay() - 1) % 7;
+    if (daysBefore < 0)
+      daysBefore += 7;
     date.setDate(date.getDate() - daysBefore);
 
     for (let i = 0; i < 7 * 6; i++) {
