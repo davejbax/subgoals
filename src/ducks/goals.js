@@ -2,7 +2,7 @@ import * as cloneDeep from 'lodash/cloneDeep';
 import { findGoalById } from '../logic/goalSelectors.js';
 import { breadthFirstSearch } from '../logic/trees.js';
 import { createSelector } from 'reselect';
-import { TYPE_DEADLINE, TYPE_TARGET } from '../logic/dailyGoals.js';
+import { TYPE_DEADLINE, TYPE_TARGET, TYPE_MANUAL } from '../logic/dailyGoals.js';
 
 // Actions
 const ADD_SUBGOAL = 'subgoals/goals/ADD_SUBGOAL';
@@ -15,6 +15,7 @@ const REMOVE_FROM_DAILY = 'subgoals/goals/REMOVE_FROM_DAILY';
 const REMOVE_LATEST_FROM_DAILY = 'subgoals/goals/REMOVE_LATEST_FROM_DAILY';
 const SET_DAILY_TYPE = 'subgoals/goals/SET_DAILY_TYPE';
 const CONFIGURE_DAILY_TYPE = 'subgoals/goals/CONFIGURE_DAILY_TYPE';
+const TOGGLE_GOAL_DAILY = 'subgoal/goals/TOGGLE_GOAL_DAILY';
 
 // Reducer
 const INITIAL_STATE = {
@@ -356,6 +357,22 @@ export default function reducer(state = INITIAL_STATE, action) {
         action.goalId,
         goal => goal.daily.typeConfig = action.config
       );
+    case TOGGLE_GOAL_DAILY:
+      return mutateGoal(
+        state,
+        action.goalId,
+        goal => {
+          if (goal.daily) {
+            goal.daily = false;
+          } else {
+            goal.daily = {
+              type: TYPE_MANUAL,
+              typeConfig: null,
+              history: []
+            }
+          }
+        }
+      )
     default: return state;
   }
 }
@@ -503,6 +520,21 @@ export function configureDailyType(goalId, config) {
     type: CONFIGURE_DAILY_TYPE,
     goalId: goalId,
     config: config
+  }
+}
+
+/**
+ * Toggles whether or not a goal is a daily goal.
+ * If the goal is daily, this will erase all associated daily data.
+ * If the goal is not daily, this will initialize the goal with empty history and
+ * a daily type of manual.
+ * 
+ * @param {number} goalId ID of goal
+ */
+export function toggleGoalDaily(goalId) {
+  return {
+    type: TOGGLE_GOAL_DAILY,
+    goalId: goalId
   }
 }
 

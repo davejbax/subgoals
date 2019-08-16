@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { setGoalName, toggleGoalComplete, deleteGoal, getGoalsWithCompleteness, addToDaily, removeLatestFromDaily, setDailyType, configureDailyType } from '../ducks/goals.js';
+import { setGoalName, toggleGoalComplete, deleteGoal, getGoalsWithCompleteness, addToDaily, removeLatestFromDaily, setDailyType, configureDailyType, toggleGoalDaily } from '../ducks/goals.js';
 import { setSelectedGoal } from '../ducks/page.js';
 import EditSubgoalModal from '../components/page-goal/EditSubgoalModal.js';
 import { findGoalById } from '../logic/goalSelectors.js';
@@ -49,7 +49,8 @@ const mapDispatchToProps = dispatch => ({
   onMarkDay: (subgoal, date) => onMarkDay(dispatch, subgoal, date),
   onUnmarkDay: (subgoal, date) => onUnmarkDay(dispatch, subgoal, date),
   onChangeDailyType: (subgoal, type) => dispatch(setDailyType(subgoal.id, type)),
-  onConfigureDailyType: (subgoal, config) => dispatch(configureDailyType(subgoal.id, config))
+  onConfigureDailyType: (subgoal, config) => dispatch(configureDailyType(subgoal.id, config)),
+  onToggleDaily: (subgoal) => dispatch(toggleGoalDaily(subgoal.id))
 });
 
 export default connect(

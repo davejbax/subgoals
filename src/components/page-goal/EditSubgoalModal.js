@@ -238,12 +238,20 @@ class EditSubgoalModal extends Component {
           </section>
           <aside className="column-aside">
             {isLeafNode(subgoal) ?
-              <button
-                className="button-side"
-                onClick={() => this.props.onToggleComplete(subgoal)}
-              >
-                Mark as {subgoal.completed ? 'incomplete' : 'complete'}
-              </button>
+              <>
+                <button
+                  className="button-side"
+                  onClick={() => this.props.onToggleComplete(subgoal)}
+                >
+                  Mark as {subgoal.completed ? 'incomplete' : 'complete'}
+                </button>
+                <button
+                  className="button-side"
+                  onClick={() => this.props.onToggleDaily(subgoal)}
+                >
+                  {isDailyGoal(subgoal) ? 'Convert to regular' : 'Convert to daily'}
+                </button>
+              </>
             :
               <button
                 className="button-side"
