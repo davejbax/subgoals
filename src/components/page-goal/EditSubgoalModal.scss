@@ -1,5 +1,23 @@
 @import '../../globals.scss';
 
+.subgoal-modal-container {
+  display: flex;
+  flex-direction: column;
+  max-height: inherit;
+}
+
+.subgoal-modal-container > header {
+  flex: 0;
+}
+
+.subgoal-modal-container > .columns {
+  flex: 1;
+}
+
+.subgoal-modal-container .column-main {
+  overflow: auto;
+}
+
 header {
   display: flex;
   align-items: flex-start;
@@ -28,6 +46,8 @@ h3 {
 
   padding: 0 $padding;
   padding-bottom: $padding;
+
+  overflow: auto;
 }
 
 .columns .column-main,
@@ -53,6 +73,7 @@ h3 {
 
   .columns .column-aside {
     margin-top: $paddingSmall;
+    margin-left: 0;
   }
 }
 
@@ -112,4 +133,70 @@ p {
   &.fa-times {
     color: map-get($bgColors, salmon);
   }
+}
+
+.daily-controls {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-column-gap: $paddingSmall;
+  grid-row-gap: $paddingSmall;
+
+  align-items: center;
+}
+
+.daily-controls label {
+  text-align: right;
+  color: #666;
+}
+
+.daily-controls select,
+.daily-controls input {
+  padding: $paddingSmall * 0.5;
+  border: none;
+  border-bottom: 2px solid #CCC;
+  background: #EEE;
+  font-family: unset;
+
+  &:focus {
+    outline: none;
+    border-bottom: 2px solid map-get($bgColors, primary);
+  }
+}
+
+.progress-bar {
+  display: flex;
+  align-items: center;
+}
+
+.progress-bar__bar {
+  position: relative;
+
+  height: 0.5em;
+  background: #EEE;
+  border-radius: 0.5em;
+
+  overflow: hidden;
+  flex: 1;
+
+  .fill {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background: map-get($bgColors, primary);
+  }
+}
+
+.progress-bar__label {
+  margin-left: 0.5em;
+}
+
+.boxed-text {
+  padding: 0.2em 0.6em;
+  background: map-get($bgColors, primary);
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+  
+  display: inline-block;
 }

@@ -2,6 +2,7 @@ import * as cloneDeep from 'lodash/cloneDeep';
 import { findGoalById } from '../logic/goalSelectors.js';
 import { breadthFirstSearch } from '../logic/trees.js';
 import { createSelector } from 'reselect';
+import { TYPE_DEADLINE, TYPE_TARGET } from '../logic/dailyGoals.js';
 
 // Actions
 const ADD_SUBGOAL = 'subgoals/goals/ADD_SUBGOAL';
@@ -12,6 +13,8 @@ const DELETE_GOAL = 'subgoals/goals/DELETE_GOAL';
 const ADD_TO_DAILY = 'subgoals/goals/ADD_TO_DAILY';
 const REMOVE_FROM_DAILY = 'subgoals/goals/REMOVE_FROM_DAILY';
 const REMOVE_LATEST_FROM_DAILY = 'subgoals/goals/REMOVE_LATEST_FROM_DAILY';
+const SET_DAILY_TYPE = 'subgoals/goals/SET_DAILY_TYPE';
+const CONFIGURE_DAILY_TYPE = 'subgoals/goals/CONFIGURE_DAILY_TYPE';
 
 // Reducer
 const INITIAL_STATE = {
@@ -53,6 +56,7 @@ const INITIAL_STATE = {
           points: 0,
           daily: {
             type: 'manual',
+            typeConfig: null,
             history: [
               '2019-08-12T12:00:00.000Z',
               '2019-08-13T12:00:00.000Z',
@@ -316,7 +320,42 @@ export default function reducer(state = INITIAL_STATE, action) {
             }
           }
         }
-      )
+      );
+    case SET_DAILY_TYPE:
+      return mutateGoal(
+        state,
+        action.goalId,
+        goal => {
+          // Do nothing if we aren't changing type
+          if (goal.daily.type === action.newType) {
+            return goal;
+          }
+
+          // Set type
+          goal.daily.type = action.newType;
+          goal.daily.typeConfig = null;
+
+          // Create default type config
+          switch (goal.daily.type) {
+            case TYPE_TARGET:
+              // Default target: 10 times
+              goal.daily.typeConfig = 10;
+              break;
+            case TYPE_DEADLINE:
+              // Default deadline: 1 week from now
+              const now = new Date();
+              now.setDate(now.getDate() + 7);
+              goal.daily.typeConfig = now.toISOString();
+              break;
+          }
+        }
+      );
+    case CONFIGURE_DAILY_TYPE:
+      return mutateGoal(
+        state,
+        action.goalId,
+        goal => goal.daily.typeConfig = action.config
+      );
     default: return state;
   }
 }
@@ -433,6 +472,37 @@ export function removeLatestFromDaily(goalId, timestamp) {
     type: REMOVE_LATEST_FROM_DAILY,
     goalId: goalId,
     timestamp: timestamp
+  }
+}
+
+/**
+ * Sets the type of a daily goal. Any properties from the previous type of
+ * the goal will be discarded, and the new properties shall be initialized
+ * with default values.
+ * 
+ * @param {number} goalId ID of goal to change
+ * @param {string} newType New daily goal type; see `logic/dailyGoals.js`
+ */
+export function setDailyType(goalId, newType) {
+  return {
+    type: SET_DAILY_TYPE,
+    goalId: goalId,
+    newType: newType
+  }
+}
+
+/**
+ * Sets the parameters for a daily goal's type. For instance, a target type
+ * requires a configuration of the number (i.e. the target itself).
+ * 
+ * @param {number} goalId ID of goal to change
+ * @param {any} config New configuration value for goal; can be any type
+ */
+export function configureDailyType(goalId, config) {
+  return {
+    type: CONFIGURE_DAILY_TYPE,
+    goalId: goalId,
+    config: config
   }
 }
 

@@ -15,16 +15,10 @@
 }
 
 .subgoal-modal {
-	position: absolute;
-	top: 20%;
-	left: 50%;
 	width: 80vw;
 	max-width: 800px;
-
-	margin: 0 auto;
-
-	// Center
-	transform: translateX(-50%);
+	max-height: 80vh;
+	margin: 10vh auto;
 
 	background: white;
 	box-shadow: 0 0.2em 0.3em rgba(0, 0, 0, 0.3);
@@ -35,12 +29,14 @@
 	}
 
 	@media screen and (max-width: $breakSmall) {
+		position: absolute;
 		top: 0;
 		left: 0;
 		right: 0;
-		bottom: 0;
 		width: auto;
 		max-width: none;
+		max-height: 100vh;
+		min-height: 100%;
 		transform: none;
 		margin: 0;
 		
@@ -51,8 +47,8 @@
 }
 
 @keyframes slide-up {
-	0% { transform: translateX(-50%) translateY(50%); }
-	100% { transform: translateX(-50%) translateY(0%); }
+	0% { transform: translateY(50%); }
+	100% { transform: translateY(0%); }
 }
 
 @keyframes slide-up-mobile {
