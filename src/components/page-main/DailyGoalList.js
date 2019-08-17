@@ -66,6 +66,10 @@ class DailyGoalList extends Component {
   }
 
   render() {
+    if (this.props.goals.length === 0) {
+      return <em>You have no uncompleted daily goals</em>;
+    }
+
     // We use reversed days, because the scroll container for the checkboxes
     // is RTL, so that it starts scrolled at the right-hand side.
     const reversedDays = this.state.days;//.slice().reverse();
