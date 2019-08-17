@@ -105,6 +105,13 @@ button {
 
 	&:hover:before {
 		transform: scale(1);
+
+		// Stop mobile devices from showing the green centre if we're 'hovered': it
+		// looks like it's still completed if you tap to uncomplete it (because this
+		// leaves it in a 'hover' state)
+		@media (hover: none) {
+			transform: scale(0);
+		}
 	}
 
 }

@@ -1,8 +1,9 @@
 import * as cloneDeep from 'lodash/cloneDeep';
-import { findGoalById } from '../logic/goalSelectors.js';
+import { findGoalById, flattenGoals } from '../logic/goalSelectors.js';
 import { breadthFirstSearch } from '../logic/trees.js';
 import { createSelector } from 'reselect';
 import { TYPE_DEADLINE, TYPE_TARGET, TYPE_MANUAL } from '../logic/dailyGoals.js';
+import { isActiveDailyGoal } from '../logic/goalProcessing.js';
 
 // Actions
 const ADD_SUBGOAL = 'subgoals/goals/ADD_SUBGOAL';
@@ -587,5 +588,14 @@ export const getGoalsWithCompleteness = createSelector(
     // All goals that have children have completed set to false, since they
     // cannot be explicitly completed.
     return newGoals;
+  }
+)
+
+export const getActiveDailyGoals = createSelector(
+  [state => state.goals.goals],
+  (goals) => {
+    return flattenGoals(goals).filter(
+      goal => isActiveDailyGoal(goal)
+    )
   }
 )

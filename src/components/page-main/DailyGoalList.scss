@@ -1,0 +1,217 @@
+@import '../../_globals.scss';
+
+// .daily-goal-list {
+//   border-collapse: collapse;
+//   border-spacing: 0;
+//   margin-top: 3em;
+// }
+
+// .daily-goal-list td span,
+// .daily-goal-list td button {
+//   padding: $paddingSmall;
+// }
+
+// .daily-goal-list td button {
+//   &:hover {
+//     background: map-get($bgColors, grey);
+//   }
+// }
+
+// // Each row in body has white bg
+// .daily-goal-list tbody tr {
+//   background: white;
+// }
+
+// // First column
+// .daily-goal-list tbody tr td:first-child {
+//   border-right: 2px solid map-get($bgColors, grey);
+//   position: absolute;
+//   margin-right: 100%;
+// }
+
+// .daily-goal-list thead th {
+//   transform: translateX(40%) rotate(-45deg);
+//   transform-origin: 0 50%;
+//   position: relative;
+//   color: map-get($bgColors, darkGrey);
+// }
+
+// .daily-goal-list tbody td.today {
+//   border-left: 2px solid map-get($bgColors, darkGrey);
+//   border-right: 2px solid map-get($bgColors, darkGrey);
+
+//   position: relative;
+// }
+
+// .daily-goal-list tbody tr:first-child td.today,
+// .daily-goal-list tbody tr:last-child td.today {
+//   border-left: none;
+//   border-right: none;
+//   &:after {
+//     content: '';
+//     position: absolute;
+//     top: -1px;
+//     bottom: -1px;
+//     left: -1px;
+//     right: -1px;
+
+//     border-left: 2px solid map-get($bgColors, darkGrey);
+//     border-right: 2px solid map-get($bgColors, darkGrey);
+
+//     pointer-events: none;
+//   }
+// }
+
+// .daily-goal-list tbody tr:first-child td.today {
+//   &:after {
+//     border-top-left-radius: 5px;
+//     border-top-right-radius: 5px;
+//     border-top: 2px solid map-get($bgColors, darkGrey);
+//   }
+// }
+
+// .daily-goal-list tbody tr:last-child td.today {
+//   &:after {
+//     border-bottom-left-radius: 5px;
+//     border-bottom-right-radius: 5px;
+//     border-bottom: 2px solid map-get($bgColors, darkGrey);
+//   }
+// }
+
+.daily-goal-list {
+  display: flex;
+}
+
+.daily-goal-list__left {
+  flex: 0;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 10em;
+  overflow: hidden;
+}
+
+.daily-goal-list__right {
+  flex: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+
+  // Proper horizontal scrolling
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  direction: rtl;
+
+  // Inner shadow
+}
+
+$size: 3em;
+
+.daily-goal-list__left label {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  line-height: $size;
+  padding: 0 1em;
+
+  display: block;
+  background: white;
+
+  border-right: 2px solid map-get($bgColors, grey);
+}
+
+.daily-goal-list__right button {
+  width: $size;
+  height: $size;
+  text-align: center;
+
+  background: white;
+  box-sizing: border-box;
+
+  vertical-align: top;
+  transition: all 0.2s ease-in-out;
+  user-select: none;
+
+  &.completed {
+    background: map-get($bgColors, primary);
+    color: white;
+  }
+
+  span {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 1.2em;
+    user-select: none;
+  }
+}
+
+.daily-goal-list__right button.today {
+  position: relative;
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    display: block;
+
+    border-left: 2px solid #333;
+    border-right: 2px solid #333;
+  }
+}
+
+.daily-goal-list__right .row {
+  height: $size;
+  background: white;
+
+  box-shadow: inset 20px 0 20px -20px rgba(0, 0, 0, 0.3);
+}
+
+$todayBorderRadius: 5px;
+
+.daily-goal-list__right .row:nth-child(2) button.today:after {
+  border-top: 2px solid #333;
+  border-top-left-radius: $todayBorderRadius; 
+  border-top-right-radius: $todayBorderRadius;
+  top: -2px;
+}
+
+.daily-goal-list__right .row:last-child button.today:after {
+  border-bottom: 2px solid #333;
+  border-bottom-left-radius: $todayBorderRadius; 
+  border-bottom-right-radius: $todayBorderRadius; 
+  bottom: -2px;
+}
+
+// Make space for the border on the bottom row
+.daily-goal-list__right .row:last-child {
+  margin-bottom: 2px;
+}
+
+.daily-goal-list .spacer {
+  height: $size;
+  display: block;
+  overflow: visible;
+}
+
+.daily-goal-list__right .spacer .day-label {
+  width: $size;
+  height: $size;
+  display: inline-block;
+  text-align: center;
+
+  position: relative;
+
+  label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    
+    display: inline-block;
+    transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+    transform-origin: 50% 50%;
+
+    color: #999;
+    font-weight: bold;
+  }
+}

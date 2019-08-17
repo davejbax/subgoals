@@ -1,3 +1,5 @@
+import { TYPE_TARGET, TYPE_DEADLINE } from "./dailyGoals";
+
 /**
  * Calculates the progress of a goal as a floating point number from
  * 0 to 1.
@@ -74,4 +76,28 @@ export function isDailyGoal(goal) {
 
 export function isAllowedChildren(goal) {
   return !isDailyGoal(goal);
+}
+
+export function isActiveDailyGoal(goal) {
+  if (!isDailyGoal(goal) || goal.completed)
+    return false;
+  
+  // // If the goal is a target type, and the target has been met, it is now inactive
+  // if (goal.daily.type === TYPE_TARGET
+  //   && goal.daily.history.length >= goal.daily.typeConfig) {
+  //   return false;
+  // }
+
+  // // If the goal is a deadline type, and the deadline is passed, it is now inactive
+  // if (goal.daily.type === TYPE_DEADLINE) {
+  //   const deadline = new Date(goal.daily.typeConfig);
+  //   const today = new Date();
+  //   today.setHours(0, 0, 0, 0);
+    
+  //   if (today > deadline) {
+  //     return false;
+  //   }
+  // }
+
+  return true;
 }
