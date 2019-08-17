@@ -366,8 +366,7 @@ export default function reducer(state = INITIAL_STATE, action) {
 
           // Set type
           goal.daily.type = action.newType;
-          goal.daily.typeConfig = null;
-
+          
           // Create default type config
           switch (goal.daily.type) {
             case TYPE_TARGET:
@@ -379,6 +378,9 @@ export default function reducer(state = INITIAL_STATE, action) {
               const now = new Date();
               now.setDate(now.getDate() + 7);
               goal.daily.typeConfig = now.toISOString();
+              break;
+            default:
+              goal.daily.typeConfig = null;
               break;
           }
         }

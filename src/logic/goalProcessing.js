@@ -1,4 +1,3 @@
-import { TYPE_TARGET, TYPE_DEADLINE } from "./dailyGoals";
 import md5 from 'blueimp-md5';
 
 /**
@@ -90,23 +89,6 @@ export function isAllowedChildren(goal) {
 export function isActiveDailyGoal(goal) {
   if (!isDailyGoal(goal) || goal.completed)
     return false;
-  
-  // // If the goal is a target type, and the target has been met, it is now inactive
-  // if (goal.daily.type === TYPE_TARGET
-  //   && goal.daily.history.length >= goal.daily.typeConfig) {
-  //   return false;
-  // }
-
-  // // If the goal is a deadline type, and the deadline is passed, it is now inactive
-  // if (goal.daily.type === TYPE_DEADLINE) {
-  //   const deadline = new Date(goal.daily.typeConfig);
-  //   const today = new Date();
-  //   today.setHours(0, 0, 0, 0);
-    
-  //   if (today > deadline) {
-  //     return false;
-  //   }
-  // }
 
   return true;
 }

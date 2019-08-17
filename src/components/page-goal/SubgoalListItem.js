@@ -51,7 +51,7 @@ const SubgoalListItem = ({
 
       {/* Daily goal indicator */}
       {isDaily &&
-        <span class="daily-indicator">
+        <span className="daily-indicator">
           <i className="fas fa-calendar"></i>
         </span>
       }

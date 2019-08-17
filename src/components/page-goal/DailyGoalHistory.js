@@ -130,10 +130,11 @@ class DailyGoalHistory extends Component {
             </tr>
           </thead>
           <tbody>
-            {rows.map(row => (
-              <tr>
+            {rows.map((row, i) => (
+              <tr key={`row-${i}`}>
                 {row.map(item => (
                   <td
+                    key={item.date}
                     className={
                       this.getCountClass(item.count, maxCount)
                       + (item.isSelectedMonth ? '' : ' disabled')

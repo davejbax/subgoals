@@ -106,7 +106,7 @@ class EditSubgoalModal extends Component {
         const progress = daily.history.length / (daily.typeConfig || 1) * 100;
         controls = (
           <>
-            <label for="target">Target</label>
+            <label htmlFor="target">Target</label>
             <span>
               <input
                 type="number"
@@ -153,7 +153,7 @@ class EditSubgoalModal extends Component {
           : '?';
         controls = (
           <>
-            <label for="deadline">Deadline</label>
+            <label htmlFor="deadline">Deadline</label>
             <span>
               <input
                 type="date"
@@ -176,7 +176,7 @@ class EditSubgoalModal extends Component {
 
     return (
       <>
-        <label for="type">Type</label>
+        <label htmlFor="type">Type</label>
         <span>
           <select
             name="type"

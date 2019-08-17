@@ -84,25 +84,25 @@ class DailyGoalList extends Component {
 
             {/* Labels for each row */}
             {this.props.goals.map(goal => (
-              <label>{goal.name}</label>
+              <label key={goal.id}>{goal.name}</label>
             ))}
           </div>
           <div className="daily-goal-list__right">
             {/* Include formatted dates for each day */}
             <span className="spacer">
               {reversedDays.map(date => (
-                <span className="day-label">
+                <span key={date} className="day-label">
                   <label>{this.formatDate(date)}</label>
                 </span>
               ))}
             </span>
             {/* Create a row for each goal */}
             {this.props.goals.map(goal => (
-              <div className="row">
+              <div className="row" key={goal.id}>
                 {/* Add a corresponding button column for each day */}
                 {reversedDays.map(date => (
                   <button
-                    key={date}
+                    key={date + '-' + goal.id}
                     className={
                       (this.isToday(date) ? 'today' : '')
                       + (counts[goal.id][date] ? ' completed' : '')

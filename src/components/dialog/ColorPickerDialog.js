@@ -38,6 +38,7 @@ class ColorPickerDialog extends Component {
       const selectedClass = `color-${i}` === this.state.selected ? 'selected' : '';
       buttons.push(
         <button
+          key={i}
           className={`color-button bg-color-${i} ${selectedClass}`}
           onClick={() => this.handleChangeSelected(`color-${i}`)}
         >
