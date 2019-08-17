@@ -25,137 +25,116 @@ const INITIAL_STATE = {
   goals: [
     {
       id: 0,
-      name: 'Getting fit',
-      color: 'salmon',
+      name: 'Welcome',
+      color: 'color-1',
       subgoals: [
         {
-          id: 2,
-          name: 'Memes',
+          id: 1,
+          name: 'All items in this list are \'subgoals\'',
           completed: false,
-          points: 0,
+          daily: false,
+          subgoals: []
+        },
+        {
+          id: 10,
+          name: 'Click on a subgoal to edit and view more information',
+          completed: false,
+          daily: false,
+          subgoals: []
+        },
+        {
+          id: 9,
+          name: 'Completing subgoals',
+          completed: false,
           daily: false,
           subgoals: [
             {
               id: 3,
-              name: 'Nesting',
-              completed: true,
-              points: 0,
+              name: 'Tap in the top-left of a subgoal to toggle whether it is completed',
+              completed: false,
               daily: false,
               subgoals: []
             },
             {
               id: 4,
-              name: 'This is a goal with a particularly long name, created for the purpose of demonstrating multiline functionality whereby multiple lines of text can be displayed in a single element!',
+              name: 'This is a completed subgoal',
               completed: true,
-              points: 0,
               daily: false,
+              subgoals: []
+            },
+            {
+              id: 5,
+              name: 'When all subgoals directly beneath another item are completed, the item is also considered completed',
+              completed: false,
+              daily: false,
+              subgoals: []
+            },
+            {
+              id: 6,
+              name: 'This subgoal has all its subgoals completed, and is therefore completed',
+              completed: false,
+              daily: false,
+              subgoals: [
+                {
+                  id: 7,
+                  name: 'Task 1',
+                  completed: true,
+                  daily: false,
+                  subgoals: []
+                },
+                {
+                  id: 8,
+                  name: 'Task 2',
+                  completed: true,
+                  daily: false,
+                  subgoals: []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: 11,
+          name: 'Daily goals',
+          completed: false,
+          daily: false,
+          subgoals: [
+            {
+              id: 12,
+              name: 'Daily goals are goals that you intend to complete daily (or every few days)',
+              completed: false,
+              daily: false,
+              subgoals: []
+            },
+            {
+              id: 13,
+              name: 'Click/tap on a daily goal to see its entire history and change settings',
+              completed: false,
+              daily: false,
+              subgoals: []
+            },
+            {
+              id: 14,
+              name: 'This is a daily goal',
+              completed: false,
+              daily: {
+                type: TYPE_MANUAL,
+                typeConfig: null,
+                history: []
+              },
               subgoals: []
             }
           ]
         },
         {
-          id: 5,
-          name: 'Daily test',
+          id: 15,
+          name: 'You can delete this goal from the main page',
           completed: false,
-          points: 0,
-          daily: {
-            type: 'manual',
-            typeConfig: null,
-            history: [
-              '2019-08-12T12:00:00.000Z',
-              '2019-08-13T12:00:00.000Z',
-              '2019-08-13T12:00:00.000Z',
-              '2019-08-14T12:00:00.000Z',
-              '2019-08-14T12:00:00.000Z',
-              '2019-08-14T12:00:00.000Z',
-              '2019-08-15T12:00:00.000Z',
-              '2019-08-15T12:00:00.000Z',
-              '2019-08-15T12:00:00.000Z',
-              '2019-08-15T12:00:00.000Z',
-              '2019-08-16T12:00:00.000Z',
-              '2019-08-16T12:00:00.000Z',
-              '2019-08-16T12:00:00.000Z',
-              '2019-08-16T12:00:00.000Z',
-              '2019-08-16T12:00:00.000Z',
-              '2019-08-17T12:00:00.000Z',
-              '2019-08-17T12:00:00.000Z',
-              '2019-08-17T12:00:00.000Z',
-              '2019-08-17T12:00:00.000Z',
-              '2019-08-17T12:00:00.000Z',
-              '2019-08-17T12:00:00.000Z',
-              '2019-08-18T12:00:00.000Z',
-              '2019-08-18T12:00:00.000Z',
-              '2019-08-18T12:00:00.000Z',
-              '2019-08-18T12:00:00.000Z',
-              '2019-08-18T12:00:00.000Z',
-              '2019-08-18T12:00:00.000Z',
-              '2019-08-18T12:00:00.000Z',
-              '2019-08-19T12:00:00.000Z',
-              '2019-08-19T12:00:00.000Z',
-              '2019-08-19T12:00:00.000Z',
-              '2019-08-19T12:00:00.000Z',
-              '2019-08-19T12:00:00.000Z',
-              '2019-08-19T12:00:00.000Z',
-              '2019-08-19T12:00:00.000Z',
-              '2019-08-19T12:00:00.000Z',
-              '2019-08-20T12:00:00.000Z',
-              '2019-08-20T12:00:00.000Z',
-              '2019-08-20T12:00:00.000Z',
-              '2019-08-20T12:00:00.000Z',
-              '2019-08-20T12:00:00.000Z',
-              '2019-08-20T12:00:00.000Z',
-              '2019-08-20T12:00:00.000Z',
-              '2019-08-20T12:00:00.000Z',
-              '2019-08-20T12:00:00.000Z',
-              '2019-08-21T12:00:00.000Z',
-              '2019-08-21T12:00:00.000Z',
-              '2019-08-21T12:00:00.000Z',
-              '2019-08-21T12:00:00.000Z',
-              '2019-08-21T12:00:00.000Z',
-              '2019-08-21T12:00:00.000Z',
-              '2019-08-21T12:00:00.000Z',
-              '2019-08-21T12:00:00.000Z',
-              '2019-08-21T12:00:00.000Z',
-              '2019-08-21T12:00:00.000Z',
-              '2019-08-22T12:00:00.000Z',
-              '2019-08-22T12:00:00.000Z',
-              '2019-08-22T12:00:00.000Z',
-              '2019-08-22T12:00:00.000Z',
-              '2019-08-22T12:00:00.000Z',
-              '2019-08-22T12:00:00.000Z',
-              '2019-08-22T12:00:00.000Z',
-              '2019-08-22T12:00:00.000Z',
-              '2019-08-22T12:00:00.000Z',
-              '2019-08-22T12:00:00.000Z',
-              '2019-08-22T12:00:00.000Z',
-              '2019-08-23T12:00:00.000Z',
-              '2019-08-23T12:00:00.000Z',
-              '2019-08-23T12:00:00.000Z',
-              '2019-08-23T12:00:00.000Z',
-              '2019-08-23T12:00:00.000Z',
-              '2019-08-23T12:00:00.000Z',
-              '2019-08-23T12:00:00.000Z',
-              '2019-08-23T12:00:00.000Z',
-              '2019-08-23T12:00:00.000Z',
-              '2019-08-23T12:00:00.000Z',
-              '2019-08-23T12:00:00.000Z',
-              '2019-08-23T12:00:00.000Z'
-            ]
-          },
+          daily: false,
           subgoals: []
         }
       ],
       completed: false,
-      points: 0,
-      daily: false
-    },
-    {
-      id: 1,
-      name: 'Reading',
-      color: 'aquamarine',
-      subgoals: [],
-      completed: false,
-      points: 0,
       daily: false
     }
   ],
@@ -366,7 +345,7 @@ export default function reducer(state = INITIAL_STATE, action) {
 
           // Set type
           goal.daily.type = action.newType;
-          
+
           // Create default type config
           switch (goal.daily.type) {
             case TYPE_TARGET:
