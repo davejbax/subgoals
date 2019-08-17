@@ -11,7 +11,6 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onDismiss: (notification) => {
-      console.log('dismissing: ' + notification.key);
       dispatch(dismissNotification(notification.key));
     }
   };
@@ -32,7 +31,6 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
         ...notification,
         onClick: (notification, deactivate) => {
           deactivate();
-          console.log(notification);
           dispatchProps.onDismiss(notification);
         }
       }

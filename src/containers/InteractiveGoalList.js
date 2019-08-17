@@ -43,7 +43,6 @@ function onChangeGoalColor(dispatch, goal) {
 function onDeleteGoal(dispatch, goal) {
   // TODO: make DRYer; duplicated in EditSubgoalModalContainer.
   const goalId = goal.id;
-  console.log(goalId);
   dispatch(
     openConfirmDialog(
       'Are you sure you want to delete this goal? This action cannot be undone',
