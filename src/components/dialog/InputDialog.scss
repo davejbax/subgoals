@@ -1,0 +1,16 @@
+@import '../../_globals.scss';
+
+.large-input {
+  display: block;
+  width: 100%;
+  padding: $paddingSmall * 0.5;
+  
+  border: none;
+  background: #EEE;
+  border-bottom: 2px solid #CCC;
+
+  &:focus {
+    border-bottom: 2px solid map-get($bgColors, primary);
+    outline: none;
+  }
+}

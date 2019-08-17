@@ -8,7 +8,12 @@
 	list-style: none;
 	margin: 0;
 	padding: 0;
+
 	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+
+	user-select: none;
 }
 
 .goal-list .goal-list__item {
@@ -16,21 +21,30 @@
 		width: 100%;
 		margin-right: 0;
 		margin-bottom: $padding;
+		height: auto;
 	}
 
-	width: 30%;
+	flex-basis: 30%;
 	height: 160px;
 	border-radius: 6px;
-	margin-right: $padding;
+	margin-bottom: $padding;
 
 	box-sizing: border-box;
 	padding: $paddingSmall;
 
 	cursor: default;
 
+	display: flex;
+	flex-direction: column;
+
 	&:hover {
 		box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
 	}
+}
+
+.goal-list .goal-list__item > span {
+	flex: 1;
+	margin-bottom: $paddingSmall;
 }
 
 .goal-list .goal-list__item h3 {
@@ -39,4 +53,44 @@
 	padding: 0;
 	font-size: 1.4em;
 	font-weight: normal;
+
+	flex: 0;
+	flex-basis: auto;
+}
+
+.goal-list__item .button-group {
+	text-align: right;
+	opacity: 0;
+	transition: opacity 0.2s ease-in-out;
+
+	@media screen and (max-width: $breakSmall) {
+		opacity: 1;
+	}
+}
+
+.goal-list__item:hover .button-group {
+	opacity: 1;	
+}
+
+.goal-list__item .button-group button {
+	padding: 0.4em;
+	color: #333;
+}
+
+.goal-list__item.dummy {
+	border: 2px solid map-get($bgColors, darkGrey);
+
+	i {
+		font-size: 0.7em;
+		position: relative;
+		top: -0.2em;
+	}
+
+	h3 {
+		margin-bottom: 0;
+	}
+
+	&:hover {
+		border: 2px solid map-get($bgColors, darkGrey);
+	}
 }

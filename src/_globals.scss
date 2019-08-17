@@ -19,11 +19,59 @@ $bgColors: (
 	lightGrey: #DDD,
 	grey: #CCC,
 	darkGrey: #666,
-	green: #6fe6a4
+	green: #6fe6a4,
+
+	color-0: #ef5350,
+	color-1: #ff867c,
+	color-2: #ec407a,
+	color-3: #ff77a9,
+	color-4: #ab47bc,
+	color-5: #df78ef,
+	color-6: #7e57c2,
+	color-7: #b085f5,
+	color-8: #5c6bc0,
+	color-9: #8e99f3,
+	color-10: #42a5f5,
+	color-11: #80d6ff, //
+	color-12: #29b6f6,
+	color-13: #73e8ff, //
+	color-14: #26c6da,
+	color-15: #6ff9ff, //
+	color-16: #26a69a,
+	color-17: #64d8cb,
+	color-18: #66bb6a,
+	color-19: #98ee99, //
+	color-20: #9ccc65,
+	color-21: #cfff95, //
+	color-22: #d4e157, //
+	color-23: #ffff89, //
+	color-24: #ffee58, //
+	color-25: #ffff8b, //
+	color-26: #ffca28, //
+	color-27: #fffd61, //
+	color-28: #ffa726,
+	color-29: #ffd95b, //
+	color-30: #ff7043,
+	color-31: #ffa270,
 );
 
-// Generate an evenly hued collection of colors
-$colorCount: 32;
-@for $i from 0 to $colorCount {
-	$bgColors: map-merge($bgColors, ('color-#{$i}': hsl($i / $colorCount * 256, 73%, 67%)));
-}
+$lightBgColors: (
+	color-11,
+	color-13,
+	color-15,
+	color-19,
+	color-21,
+	color-22,
+	color-23,
+	color-24,
+	color-25,
+	color-26,
+	color-27,
+	color-29
+)
+
+// // Generate an evenly hued collection of colors
+// $colorCount: 32;
+// @for $i from 0 to $colorCount {
+// 	$bgColors: map-merge($bgColors, ('color-#{$i}': hsl($i / $colorCount * 256, 73%, 67%)));
+// }

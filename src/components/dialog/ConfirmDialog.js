@@ -13,15 +13,15 @@ const ConfirmDialog = (props) => {
       </header>
       <section>
         <p>{ props.text }</p>
-        <div class="buttons">
+        <div className="buttons">
           <button
-            class="button button--primary"
+            className="button button--primary"
             onClick={() => {props.onClose(); props.onAccept();}}
           >
             Yes
           </button>
           <button
-            class="button"
+            className="button"
             onClick={() => {props.onClose(); props.onReject();}}
           >
             No

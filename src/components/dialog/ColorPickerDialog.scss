@@ -1,0 +1,34 @@
+$buttonSize: 1.6em;
+
+.color-picker {
+  text-align: center;
+
+  display: grid;
+  grid-template-columns: repeat(8, $buttonSize);
+  grid-row-gap: 0.5em;
+  grid-column-gap: 0.5em;
+  justify-content: center;
+
+  margin-bottom: 1em;
+}
+
+.color-button {
+  display: inline-block;
+  width: $buttonSize;
+  height: $buttonSize;
+  border-radius: 50%;
+  // border: 1px solid #666;
+  // box-sizing: border-box;
+
+  color: transparent;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: black;
+  }
+
+  &.selected {
+    box-shadow: 0 0 0 3px black;
+    color: black;
+  }
+}

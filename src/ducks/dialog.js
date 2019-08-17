@@ -1,10 +1,14 @@
 // Actions
 const OPEN_INFO_DIALOG = 'subgoals/dialog/OPEN_INFO_DIALOG';
 const OPEN_CONFIRM_DIALOG = 'subgoals/dialog/OPEN_CONFIRM_DIALOG';
+const OPEN_INPUT_DIALOG = 'subgoals/dialog/OPEN_INPUT_DIALOG';
+const OPEN_COLORPICKER_DIALOG = 'subgoals/dialog/OPEN_COLORPICKER_DIALOG';
 const CLOSE_DIALOG = 'subgoals/dialog/CLOSE_DIALOG';
 
 // Constants
 export const DIALOG_TYPE_INFO = 'info';
+export const DIALOG_TYPE_INPUT = 'input';
+export const DIALOG_TYPE_COLORPICKER = 'colorpicker';
 export const DIALOG_TYPE_CONFIRM = 'confirm';
 
 // Reducer
@@ -35,6 +39,26 @@ export default function reducer(state = INITIAL_STATE, action) {
         onAccept: action.onAccept,
         onReject: action.onReject
       };
+    case OPEN_INPUT_DIALOG:
+      return {
+        ...state,
+        type: DIALOG_TYPE_INPUT,
+        isOpen: true,
+        message: action.message,
+        onAccept: action.onAccept,
+        onReject: action.onReject,
+        value: action.value
+      };
+    case OPEN_COLORPICKER_DIALOG:
+      return {
+        ...state,
+        type: DIALOG_TYPE_COLORPICKER,
+        isOpen: true,
+        message: action.message,
+        onAccept: action.onAccept,
+        onReject: action.onReject,
+        value: action.value
+      }
     case CLOSE_DIALOG:
       return {
         ...state,
@@ -71,6 +95,35 @@ export function openConfirmDialog(message, onAccept, onReject) {
     onAccept,
     onReject
   };
+}
+
+export function openInputDialog(message, onAccept, onReject, value = '') {
+  return {
+    type: OPEN_INPUT_DIALOG,
+    message,
+    onAccept,
+    onReject,
+    value
+  };
+}
+
+/**
+ * Opens a colorpicker dialog, allowing a user to choose from 32 hues (named
+ * color-0 through color-31).
+ * 
+ * @param {string} message 
+ * @param {function} onAccept 
+ * @param {function} onReject
+ * @param {string} value 
+ */
+export function openColorpickerDialog(message, onAccept, onReject, value = 'color-0') {
+  return {
+    type: OPEN_COLORPICKER_DIALOG,
+    message,
+    onAccept,
+    onReject,
+    value
+  }
 }
 
 /**

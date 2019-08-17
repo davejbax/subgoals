@@ -1,4 +1,5 @@
 import { TYPE_TARGET, TYPE_DEADLINE } from "./dailyGoals";
+import md5 from 'blueimp-md5';
 
 /**
  * Calculates the progress of a goal as a floating point number from
@@ -7,7 +8,7 @@ import { TYPE_TARGET, TYPE_DEADLINE } from "./dailyGoals";
  * @param {Goal} goal Goal object for which to calculate progress of completion
  */
 export function calculateGoalProgress(goal) {
-  if (goal.completed)
+  if (isGoalCompleted(goal))
     return 1;
   else if (goal.subgoals.length === 0)
     return 0;
@@ -26,17 +27,25 @@ export function calculateGoalProgress(goal) {
  * @param {Goal} goal Goal for which to compute color
  */
 export function getGoalColor(goal) {
-  const NUM_COLORS = 32;
-
-  // Compute simple hash from goal name
-  let hash = 0;
-  for (let i = 0; i < goal.name.length; i++) {
-    hash = hash * 31 + goal.name.charCodeAt(i);
+  if (goal.color) {
+    return goal.color;
   }
 
-  // Take hash mod number of colors, and return appropriate color string
-  hash %= NUM_COLORS;
-  return `color-${hash}`;
+  const NUM_COLORS = getNumGoalColors();
+
+  // Compute simple hash from goal name
+  let hash = md5(goal.name);
+  let index = 0;
+  for (let i = 0; i < 32; i++) {
+    index = (16 * index + parseInt(hash[i], 16)) % NUM_COLORS;
+  }
+
+  return `color-${index}`;
+}
+
+export function getNumGoalColors() {
+  // TODO: get this constant to sync with CSS somehow...?
+  return 32;
 }
 
 /**

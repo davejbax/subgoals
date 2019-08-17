@@ -6,9 +6,11 @@ import { TYPE_DEADLINE, TYPE_TARGET, TYPE_MANUAL } from '../logic/dailyGoals.js'
 import { isActiveDailyGoal } from '../logic/goalProcessing.js';
 
 // Actions
+const CREATE_GOAL = 'subgoals/goals/CREATE_GOAL';
 const ADD_SUBGOAL = 'subgoals/goals/ADD_SUBGOAL';
 const MOVE_SUBGOAL = 'subgoals/goals/MOVE_SUBGOAL';
 const SET_GOAL_NAME = 'subgoals/goals/SET_GOAL_NAME';
+const SET_GOAL_COLOR = 'subgoals/goals/SET_GOAL_COLOR';
 const TOGGLE_GOAL_COMPLETE = 'subgoals/goals/TOGGLE_GOAL_COMPLETE';
 const DELETE_GOAL = 'subgoals/goals/DELETE_GOAL';
 const ADD_TO_DAILY = 'subgoals/goals/ADD_TO_DAILY';
@@ -160,6 +162,21 @@ const INITIAL_STATE = {
   nextId: 6
 };
 
+function applyCreateGoal(state, action) {
+  const newState = cloneDeep(state);
+
+  newState.goals.push({
+    id: newState.nextId,
+    name: action.name,
+    subgoals: [],
+    completed: false,
+    daily: false
+  });
+  newState.nextId++;
+
+  return newState;
+}
+
 function applyAddSubgoal(state, action) {
   const newState = cloneDeep(state);
   const subgoal = findGoalById(newState.goals, action.goalId);
@@ -212,6 +229,13 @@ function applyMoveSubgoal(state, action) {
 function applyDeleteGoal(state, action) {
   const newState = cloneDeep(state);
 
+  // First check whether it is a simple case of deleting from top level
+  const index = newState.goals.findIndex(goal => goal.id === action.goalId);
+  if (index > -1) {
+    newState.goals.splice(index, 1);
+    return newState;
+  }
+
   // Find the parent
   const parent = breadthFirstSearch(
     { subgoals: newState.goals },
@@ -219,7 +243,7 @@ function applyDeleteGoal(state, action) {
     goal => goal.subgoals
   );
 
-  // If we couldn't find a parent, don't do anything
+  // If we couldn't find a parent, do nothing
   if (!parent) {
     return state;
   }
@@ -247,6 +271,7 @@ function mutateGoal(state, goalId, callback) {
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case CREATE_GOAL: return applyCreateGoal(state, action);
     case ADD_SUBGOAL: return applyAddSubgoal(state, action);
     case MOVE_SUBGOAL: return applyMoveSubgoal(state, action);
     case SET_GOAL_NAME:
@@ -254,6 +279,12 @@ export default function reducer(state = INITIAL_STATE, action) {
         state,
         action.goalId,
         goal => goal.name = action.name
+      );
+    case SET_GOAL_COLOR:
+      return mutateGoal(
+        state,
+        action.goalId,
+        goal => goal.color = action.color
       );
     case TOGGLE_GOAL_COMPLETE:
       return mutateGoal(
@@ -380,6 +411,17 @@ export default function reducer(state = INITIAL_STATE, action) {
 
 // Action creators
 /**
+ * Creates a new goal (i.e. NOT subgoal), initialized with default settings
+ * @param {string} name Name of goal to create
+ */
+export function createGoal(name) {
+  return {
+    type: CREATE_GOAL,
+    name: name
+  };
+}
+
+/**
  * Creates a new subgoal and adds it to a (selected) goal. This will be
  * a top-level subgoal (i.e. not nested).
  * 
@@ -420,6 +462,20 @@ export function setGoalName(goalId, name) {
     type: SET_GOAL_NAME,
     goalId: goalId,
     name: name
+  }
+}
+
+/**
+ * Sets a goal's color explicitly (i.e. overrides generated color)
+ * 
+ * @param {number} goalId ID of goal
+ * @param {string} color New color
+ */
+export function setGoalColor(goalId, color) {
+  return {
+    type: SET_GOAL_COLOR,
+    goalId: goalId,
+    color: color
   }
 }
 

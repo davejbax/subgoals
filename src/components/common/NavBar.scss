@@ -24,9 +24,15 @@
 	white-space: nowrap;
 }
 
+@each $color in $lightBgColors {
+	.nav-bar.bg-#{$color} {
+		color: #333;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+	}
+}
+
 .nav-bar .back-button {
 	text-decoration: none;
-	color: white;
 	font-size: 1.5em;
 
 	margin-right: 12px;
