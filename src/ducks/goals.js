@@ -138,7 +138,7 @@ const INITIAL_STATE = {
       daily: false
     }
   ],
-  nextId: 6
+  nextId: 16
 };
 
 function applyCreateGoal(state, action) {
