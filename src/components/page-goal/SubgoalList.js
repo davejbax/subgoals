@@ -207,7 +207,8 @@ class SubgoalList extends Component {
         />
 
         <AddSubgoal
-          onAddKeyPress={(e) => this.props.onAddKeyPress(e, this.props.goal.id)}
+          goalId={this.props.goal.id}
+          onAddSubgoal={this.props.onAddSubgoal}
           depth={this.props.newSubgoalDepth} />
 
         <OverflowMenu
@@ -235,14 +236,45 @@ class SubgoalList extends Component {
   }
 }
 
-const AddSubgoal = ({ onAddKeyPress, depth }) =>
-  <div className={`subgoal-list-item subgoal-list-add depth-${depth}`}>
-    <div
-      className="subgoal-list-item-text"
-      placeholder="Type here"
-      contentEditable="true"
-      onKeyDown={onAddKeyPress} />
-    <i className="fas fa-plus button-add"></i>
-  </div>
+class AddSubgoal extends Component {
+  constructor(props) {
+    super(props);
+
+    this.inputRef = React.createRef();
+    this.handleAddKeyPress = this.handleAddKeyPress.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleAddKeyPress(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      this.handleSubmit();
+    }
+  }
+
+  handleSubmit() {
+    this.props.onAddSubgoal(this.inputRef.current.textContent, this.props.goalId);
+    this.inputRef.current.textContent = '';
+  }
+
+  render() {
+    return (
+      <div className={`subgoal-list-item subgoal-list-add depth-${this.props.depth}`}>
+        <div
+          className="subgoal-list-item-text"
+          placeholder="Type here"
+          contentEditable="true"
+          ref={this.inputRef}
+          onKeyDown={this.handleAddKeyPress}
+        />
+        <i
+          className="fas fa-plus button-add"
+          onClick={this.handleSubmit}
+        ></i>
+      </div>
+    );
+  }
+}
+  
 
 export default SubgoalList;
