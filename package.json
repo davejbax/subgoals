@@ -8,7 +8,7 @@
     "blueimp-md5": "^2.11.1",
     "date-input-polyfill-react": "^2.14.4",
     "lodash": "^4.17.15",
-    "node-sass": "^4.11.0",
+    "node-sass": "^7.0.0",
     "normalize.css": "6.0.0",
     "react": "^16.7.0",
     "react-beautiful-dnd": "^10.0.3",
